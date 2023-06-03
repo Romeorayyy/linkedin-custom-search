@@ -9,9 +9,9 @@ app.use(cors()); // Use CORS middleware. This will allow all origins by default.
 app.use(express.json());
 
 app.get('/api/search', async (req, res) => {
-  const { query } = req.query;
+  const { query, page } = req.query; // Get the page number from the query parameters
   const options = {
-    page: 0,
+    page: Number(page), // Convert the page number to a Number and pass it to the options
     safe: false,
     parse_ads: false,
     additional_params: {
