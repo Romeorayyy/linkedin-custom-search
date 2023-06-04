@@ -1,4 +1,3 @@
-// /Users/randyyono/Desktop/google-search-app/src/components/SearchComponent.js
 import React from 'react';
 import { useSearch } from '../context/SearchContext';
 
@@ -10,7 +9,6 @@ const SearchComponent = () => {
     currentPage,
     incrementPage,
     decrementPage,
-    loadMoreResults,
     handleSearchChange,
     handleSearchClick,
   } = useSearch();
@@ -66,14 +64,12 @@ const SearchComponent = () => {
               >
                 {result.title}
               </a>
-
               <div style={{ color: '#006621', marginBottom: '0.5rem' }}>
                 {result.url}
               </div>
               <p>{result.description}</p>
             </div>
           ))}
-          <button onClick={loadMoreResults}>Load More</button>
           <button onClick={decrementPage} disabled={currentPage === 1}>
             Previous
           </button>

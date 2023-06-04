@@ -13,23 +13,18 @@ export const SearchProvider = ({ children }) => {
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [page, setPage] = useState(0);
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
 
   const handleSearchClick = async () => {
-    searchGoogle(page);
-  };
-
-  const loadMoreResults = () => {
-    setPage(page + 1);
-    searchGoogle(page);
+    searchGoogle(currentPage);
   };
 
   const incrementPage = () => {
     handlePageChange(currentPage + 1);
+    console.log(currentPage);
   };
 
   const decrementPage = () => {
@@ -38,11 +33,10 @@ export const SearchProvider = ({ children }) => {
     }
   };
 
-  console.log(page);
-
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     searchGoogle(newPage);
+    console.log(newPage);
   };
 
   const searchGoogle = async (page) => {
@@ -50,7 +44,7 @@ export const SearchProvider = ({ children }) => {
       const response = await axios.get('http://localhost:4000/api/search', {
         params: {
           query: searchQuery,
-          page: page,
+          page: page - 1,
         },
       });
       console.log(response.data.results);
@@ -68,7 +62,6 @@ export const SearchProvider = ({ children }) => {
     currentPage,
     incrementPage,
     decrementPage,
-    loadMoreResults: loadMoreResults,
     handleSearchChange,
     handleSearchClick,
   };
