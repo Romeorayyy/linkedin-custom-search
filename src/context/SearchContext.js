@@ -21,7 +21,12 @@ export const SearchProvider = ({ children }) => {
   const handleSearchClick = async () => {
     setCurrentPage(1);
     searchGoogle(1); // set 1 to load first two pages
-    console.log(currentPage);
+  };
+
+  const handleKeyDown = async (event) => {
+    if (event.key === 'Enter') {
+      handleSearchClick();
+    }
   };
 
   const incrementPage = () => {
@@ -82,6 +87,7 @@ export const SearchProvider = ({ children }) => {
     decrementPage,
     handleSearchChange,
     handleSearchClick,
+    handleKeyDown, // Add this line
   };
 
   return (

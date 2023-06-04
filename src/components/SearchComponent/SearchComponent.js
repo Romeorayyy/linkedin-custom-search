@@ -12,6 +12,7 @@ const SearchComponent = () => {
     incrementPage,
     decrementPage,
     handleSearchChange,
+    handleKeyDown,
     handleSearchClick,
   } = useSearch();
 
@@ -26,6 +27,7 @@ const SearchComponent = () => {
           type="text"
           value={searchQuery}
           onChange={handleSearchChange}
+          onKeyDown={handleKeyDown} // Add this line
           placeholder="Enter search term"
         />
         <button className="search-button" onClick={handleSearchClick}>
