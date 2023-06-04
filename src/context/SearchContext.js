@@ -1,3 +1,4 @@
+// /Users/randyyono/Desktop/google-search-app/src/context/SearchContext.js
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 
@@ -14,10 +15,30 @@ export const SearchProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [page, setPage] = useState(0);
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSearchClick = async () => {
+    searchGoogle(page);
+  };
+
   const loadMoreResults = () => {
     setPage(page + 1);
-    searchGoogle();
+    searchGoogle(page);
   };
+
+  const incrementPage = () => {
+    handlePageChange(currentPage + 1);
+  };
+
+  const decrementPage = () => {
+    if (currentPage > 1) {
+      handlePageChange(currentPage - 1);
+    }
+  };
+
+  console.log(page);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
@@ -29,7 +50,7 @@ export const SearchProvider = ({ children }) => {
       const response = await axios.get('http://localhost:4000/api/search', {
         params: {
           query: searchQuery,
-          page: page - 1,
+          page: page,
         },
       });
       console.log(response.data.results);
@@ -42,18 +63,14 @@ export const SearchProvider = ({ children }) => {
 
   const value = {
     searchQuery,
-    setSearchQuery,
     results,
-    setResults,
     showResults,
-    setShowResults,
     currentPage,
-    setCurrentPage,
-    page,
-    setPage,
-    loadMoreResults,
-    handlePageChange,
-    searchGoogle,
+    incrementPage,
+    decrementPage,
+    loadMoreResults: loadMoreResults,
+    handleSearchChange,
+    handleSearchClick,
   };
 
   return (

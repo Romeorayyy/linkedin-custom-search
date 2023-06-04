@@ -1,17 +1,18 @@
+// /Users/randyyono/Desktop/google-search-app/src/components/SearchComponent.js
 import React from 'react';
 import { useSearch } from '../context/SearchContext';
 
 const SearchComponent = () => {
   const {
     searchQuery,
-    setSearchQuery,
     results,
     showResults,
     currentPage,
-    page,
+    incrementPage,
+    decrementPage,
     loadMoreResults,
-    handlePageChange,
-    searchGoogle,
+    handleSearchChange,
+    handleSearchClick,
   } = useSearch();
 
   return (
@@ -27,7 +28,7 @@ const SearchComponent = () => {
           }}
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleSearchChange}
           placeholder="Enter search term"
         />
         <button
@@ -41,7 +42,7 @@ const SearchComponent = () => {
             border: 'none',
             borderRadius: '4px',
           }}
-          onClick={() => searchGoogle(page)}
+          onClick={handleSearchClick}
         >
           Search
         </button>
@@ -73,16 +74,11 @@ const SearchComponent = () => {
             </div>
           ))}
           <button onClick={loadMoreResults}>Load More</button>
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
+          <button onClick={decrementPage} disabled={currentPage === 1}>
             Previous
           </button>
           <span>Page {currentPage}</span>
-          <button onClick={() => handlePageChange(currentPage + 1)}>
-            Next
-          </button>
+          <button onClick={incrementPage}>Next</button>
         </div>
       )}
     </div>
