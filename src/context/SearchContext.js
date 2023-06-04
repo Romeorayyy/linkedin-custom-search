@@ -19,17 +19,19 @@ export const SearchProvider = ({ children }) => {
   };
 
   const handleSearchClick = async () => {
-    searchGoogle(currentPage);
+    setCurrentPage(1);
+    searchGoogle(1); // set 1 to load first two pages
+    console.log(currentPage);
   };
 
   const incrementPage = () => {
-    handlePageChange(currentPage + 1);
+    handlePageChange(currentPage + 2);
     console.log(currentPage);
   };
 
   const decrementPage = () => {
-    if (currentPage > 1) {
-      handlePageChange(currentPage - 1);
+    if (currentPage > 2) {
+      handlePageChange(currentPage - 2);
     }
   };
 
@@ -41,14 +43,30 @@ export const SearchProvider = ({ children }) => {
 
   const searchGoogle = async (page) => {
     try {
-      const response = await axios.get('http://localhost:4000/api/search', {
+      const response1 = axios.get('http://localhost:4000/api/search', {
         params: {
           query: searchQuery,
           page: page - 1,
         },
       });
-      console.log(response.data.results);
-      setResults(response.data.results);
+
+      const response2 = axios.get('http://localhost:4000/api/search', {
+        params: {
+          query: searchQuery,
+          page: page,
+        },
+      });
+
+      const allResponses = await Promise.all([response1, response2]);
+
+      // combine the results from the two pages
+      const combinedResults = [
+        ...allResponses[0].data.results,
+        ...allResponses[1].data.results,
+      ];
+
+      console.log(combinedResults);
+      setResults(combinedResults);
       setShowResults(true);
     } catch (error) {
       console.error('Error:', error);

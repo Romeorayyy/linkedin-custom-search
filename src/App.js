@@ -1,6 +1,6 @@
 import React from 'react';
 import { SearchProvider } from './context/SearchContext';
-import SearchComponent from './components/SearchComponent';
+import SearchComponent from './components/SearchComponent/SearchComponent';
 
 function App() {
   return (
