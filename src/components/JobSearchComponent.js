@@ -28,18 +28,26 @@ const JobSearchComponent = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        fontFamily: 'Arial',
+        maxWidth: '25%',
+        margin: '0',
+        padding: '5rem',
+      }}
+    >
       <form onSubmit={handleSubmit}>
-        <div>
+        <div style={{ marginBottom: '10px' }}>
           <label htmlFor="jobTitle">Job Title:</label>
           <input
             type="text"
             id="jobTitle"
             value={jobTitle}
             onChange={(e) => setJobTitle(e.target.value)}
+            style={{ width: '100%', padding: '5px' }}
           />
         </div>
-        <div>
+        <div style={{ marginBottom: '10px' }}>
           <label htmlFor="locationKeywords">
             Location or Keywords to Include:
           </label>
@@ -48,9 +56,10 @@ const JobSearchComponent = () => {
             id="locationKeywords"
             value={locationKeywords}
             onChange={(e) => setLocationKeywords(e.target.value)}
+            style={{ width: '100%', padding: '5px' }}
           />
         </div>
-        <div>
+        <div style={{ marginBottom: '10px' }}>
           <label>Email:</label>
           <div>
             <input
@@ -60,6 +69,7 @@ const JobSearchComponent = () => {
               value="@gmail.com"
               checked={emailOption === '@gmail.com'}
               onChange={() => setEmailOption('@gmail.com')}
+              style={{ marginRight: '5px' }}
             />
             <label htmlFor="gmail">@gmail.com</label>
           </div>
@@ -71,6 +81,7 @@ const JobSearchComponent = () => {
               value="@yahoo.com"
               checked={emailOption === '@yahoo.com'}
               onChange={() => setEmailOption('@yahoo.com')}
+              style={{ marginRight: '5px' }}
             />
             <label htmlFor="yahoo">@yahoo.com</label>
           </div>
@@ -82,13 +93,16 @@ const JobSearchComponent = () => {
               value="@outlook.com"
               checked={emailOption === '@outlook.com'}
               onChange={() => setEmailOption('@outlook.com')}
+              style={{ marginRight: '5px' }}
             />
             <label htmlFor="outlook">@outlook.com</label>
           </div>
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" style={{ padding: '5px 10px' }}>
+          Submit
+        </button>
       </form>
-      {output && <h3>{output}</h3>}
+      {output && <h3 style={{ marginTop: '20px', width: '100%' }}>{output}</h3>}
     </div>
   );
 };

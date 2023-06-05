@@ -21,3 +21,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# .gitignore
+
+# Ignore env file
+.env
+
+# XML Folder
+XML
+
+xml-folder

@@ -1,4 +1,5 @@
 // /Users/randyyono/Desktop/google-search-app/src/context/SearchContext.js
+
 import { createContext, useContext, useState } from 'react';
 import axios from 'axios';
 
@@ -9,85 +10,35 @@ export const useSearch = () => {
 };
 
 export const SearchProvider = ({ children }) => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [results, setResults] = useState([]);
-  const [showResults, setShowResults] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [googleSearchResults, setGoogleSearchResults] = useState([]);
+  const [searchMeta, setSearchMeta] = useState([]);
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const handleSearchClick = async () => {
-    setCurrentPage(1);
-    searchGoogle(1); // set 1 to load first two pages
-  };
-
-  const handleKeyDown = async (event) => {
-    if (event.key === 'Enter') {
-      handleSearchClick();
-    }
-  };
-
-  const incrementPage = () => {
-    handlePageChange(currentPage + 2);
-    console.log(currentPage);
-  };
-
-  const decrementPage = () => {
-    if (currentPage > 2) {
-      handlePageChange(currentPage - 2);
-    }
-  };
-
-  const handlePageChange = (newPage) => {
-    setCurrentPage(newPage);
-    searchGoogle(newPage);
-    console.log(newPage);
-  };
-
-  const searchGoogle = async (page) => {
+  const handleSearch = async (searchQuery) => {
     try {
-      const response1 = axios.get('http://localhost:4000/api/search', {
-        params: {
-          query: searchQuery,
-          page: page - 1,
-        },
-      });
-
-      const response2 = axios.get('http://localhost:4000/api/search', {
-        params: {
-          query: searchQuery,
-          page: page,
-        },
-      });
-
-      const allResponses = await Promise.all([response1, response2]);
-
-      // combine the results from the two pages
-      const combinedResults = [
-        ...allResponses[0].data.results,
-        ...allResponses[1].data.results,
-      ];
-
-      console.log(combinedResults);
-      setResults(combinedResults);
-      setShowResults(true);
+      const response = await axios.get(
+        'https://www.googleapis.com/customsearch/v1',
+        {
+          params: {
+            key: process.env.REACT_APP_API_KEY,
+            cx: process.env.REACT_APP_API_CX,
+            q: searchQuery,
+          },
+        }
+      );
+      // set results to the context state
+      setGoogleSearchResults(response.data.items);
+      console.log(response.data.items);
     } catch (error) {
-      console.error('Error:', error);
+      console.error(error);
     }
   };
 
   const value = {
-    searchQuery,
-    results,
-    showResults,
-    currentPage,
-    incrementPage,
-    decrementPage,
-    handleSearchChange,
-    handleSearchClick,
-    handleKeyDown, // Add this line
+    googleSearchResults,
+    setGoogleSearchResults,
+    searchMeta,
+    setSearchMeta,
+    handleSearch,
   };
 
   return (
