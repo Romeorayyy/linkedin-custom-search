@@ -11,8 +11,13 @@ export const useSearch = () => {
 
 export const SearchProvider = ({ children }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [jobTitle, setJobTitle] = useState('');
+  const [locationKeywords, setLocationKeywords] = useState('');
+  const [emailOption, setEmailOption] = useState('@gmail.com');
+  const [outputKeywordSearch, setOutputKeyWordSearch] = useState('');
   const [googleSearchResults, setGoogleSearchResults] = useState([]);
   const [searchMeta, setSearchMeta] = useState([]);
+  const [error, setError] = useState(null);
 
   const handleSearch = async (searchQuery) => {
     try {
@@ -31,6 +36,7 @@ export const SearchProvider = ({ children }) => {
       console.log(response.data.items);
     } catch (error) {
       console.error(error);
+      setError(error.message); // set the error message
     }
   };
 
@@ -43,10 +49,55 @@ export const SearchProvider = ({ children }) => {
     handleSearch(searchQuery);
   };
 
+  // JobSearchComponent.js
+
+  const handleSpecificSearchSubmit = (e) => {
+    e.preventDefault();
+
+    const formattedJobTitle = `${formatKeywords(jobTitle)}`;
+    const formattedLocationKeywords = `${formatKeywords(locationKeywords)}`;
+
+    const outputText = `${formattedJobTitle} ${formattedLocationKeywords} -intitle:"profiles" -inurl:"dir/ " email "${emailOption}" site:www.linkedin.com/in/ OR site:www.linkedin.com/pub/`;
+    setOutputKeyWordSearch(outputText);
+  };
+
+  const formatKeywords = (keywords) => {
+    return keywords
+      .split(/\b(and|or)\b/i)
+      .map((keyword) =>
+        keyword.trim() === 'and' || keyword.trim() === 'or'
+          ? keyword.trim().toUpperCase()
+          : `"${keyword.trim()}"`
+      )
+      .join(' ');
+  };
+
+  const handleSetLocationKeyword = (e) => {
+    setLocationKeywords(e.target.value);
+  };
+
+  const handleSetJobTitle = (e) => {
+    setJobTitle(e.target.value);
+  };
+
+  const handleEmailOptionChange = (option) => {
+    setEmailOption(option);
+  };
+
+  // JobSearchComponent.js
+
   const value = {
     googleSearchResults,
     searchMeta,
     searchQuery,
+    emailOption,
+    outputKeywordSearch,
+    error, // get the error from the context
+    handleEmailOptionChange,
+    handleSetJobTitle,
+    handleSetLocationKeyword,
+    handleSpecificSearchSubmit,
+    formatKeywords,
     handleSearchSubmit,
     handleSearchQuery,
     setGoogleSearchResults,

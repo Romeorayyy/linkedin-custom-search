@@ -8,14 +8,14 @@ const GoogleSearch = () => {
     searchQuery,
     handleSearchQuery,
     handleSearchSubmit,
+    error,
   } = useSearch();
-
-  console.log(googleSearchResults);
 
   return (
     <div>
       <div className="search-component-container">
         <h1 className="search-header">Custom Google Search</h1>
+        {error && <div className="error">{error}</div>}
         <form onSubmit={handleSearchSubmit}>
           <input
             type="text"

@@ -1,31 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useSearch } from '../context/SearchContext'; // import useSearch hook
 
 const JobSearchComponent = () => {
-  const [jobTitle, setJobTitle] = useState('');
-  const [locationKeywords, setLocationKeywords] = useState('');
-  const [emailOption, setEmailOption] = useState('@gmail.com');
-  const [output, setOutput] = useState('');
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const formattedJobTitle = `${formatKeywords(jobTitle)}`;
-    const formattedLocationKeywords = `${formatKeywords(locationKeywords)}`;
-
-    const outputText = `${formattedJobTitle} ${formattedLocationKeywords} -intitle:"profiles" -inurl:"dir/ " email "${emailOption}" site:www.linkedin.com/in/ OR site:www.linkedin.com/pub/`;
-    setOutput(outputText);
-  };
-
-  const formatKeywords = (keywords) => {
-    return keywords
-      .split(/\b(and|or)\b/i)
-      .map((keyword) =>
-        keyword.trim() === 'and' || keyword.trim() === 'or'
-          ? keyword.trim().toUpperCase()
-          : `"${keyword.trim()}"`
-      )
-      .join(' ');
-  };
+  const {
+    locationKeywords,
+    jobTitle,
+    outputKeywordSearch,
+    handleSetLocationKeyword,
+    handleSetJobTitle,
+    handleEmailOptionChange,
+    emailOption,
+    handleSpecificSearchSubmit,
+  } = useSearch();
 
   return (
     <div
@@ -36,14 +22,14 @@ const JobSearchComponent = () => {
         padding: '5rem',
       }}
     >
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSpecificSearchSubmit}>
         <div style={{ marginBottom: '10px' }}>
           <label htmlFor="jobTitle">Job Title:</label>
           <input
             type="text"
             id="jobTitle"
             value={jobTitle}
-            onChange={(e) => setJobTitle(e.target.value)}
+            onChange={handleSetJobTitle}
             style={{ width: '100%', padding: '5px' }}
           />
         </div>
@@ -55,7 +41,7 @@ const JobSearchComponent = () => {
             type="text"
             id="locationKeywords"
             value={locationKeywords}
-            onChange={(e) => setLocationKeywords(e.target.value)}
+            onChange={handleSetLocationKeyword}
             style={{ width: '100%', padding: '5px' }}
           />
         </div>
@@ -68,7 +54,7 @@ const JobSearchComponent = () => {
               name="emailOption"
               value="@gmail.com"
               checked={emailOption === '@gmail.com'}
-              onChange={() => setEmailOption('@gmail.com')}
+              onChange={() => handleEmailOptionChange('@gmail.com')}
               style={{ marginRight: '5px' }}
             />
             <label htmlFor="gmail">@gmail.com</label>
@@ -80,7 +66,7 @@ const JobSearchComponent = () => {
               name="emailOption"
               value="@yahoo.com"
               checked={emailOption === '@yahoo.com'}
-              onChange={() => setEmailOption('@yahoo.com')}
+              onChange={() => handleEmailOptionChange('@yahoo.com')}
               style={{ marginRight: '5px' }}
             />
             <label htmlFor="yahoo">@yahoo.com</label>
@@ -92,7 +78,7 @@ const JobSearchComponent = () => {
               name="emailOption"
               value="@outlook.com"
               checked={emailOption === '@outlook.com'}
-              onChange={() => setEmailOption('@outlook.com')}
+              onChange={() => handleEmailOptionChange('@outlook.com')}
               style={{ marginRight: '5px' }}
             />
             <label htmlFor="outlook">@outlook.com</label>
@@ -102,7 +88,11 @@ const JobSearchComponent = () => {
           Submit
         </button>
       </form>
-      {output && <h3 style={{ marginTop: '20px', width: '100%' }}>{output}</h3>}
+      {outputKeywordSearch && (
+        <h3 style={{ marginTop: '20px', width: '100%' }}>
+          {outputKeywordSearch}
+        </h3>
+      )}
     </div>
   );
 };
