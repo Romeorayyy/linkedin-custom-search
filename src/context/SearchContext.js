@@ -21,26 +21,20 @@ export const SearchProvider = ({ children }) => {
   const [allData, setAllData] = useState([]);
   const [selectSearchType, setSelectSearchType] = useState('query');
 
-  const querySelect = {
-    params: {
-      key: process.env.REACT_APP_API_KEY,
-      cx: process.env.REACT_APP_API_CX,
-      q: searchQuery,
-    },
-  };
-
-  const imageSelect = {
-    params: {
-      key: process.env.REACT_APP_API_KEY,
-      cx: process.env.REACT_APP_API_CX,
-      q: searchQuery,
-      searchType: 'image',
-    },
-  };
-
-  const handleSearch = async (searchQuery) => {
+  const handleSearch = async () => {
     try {
-      const params = selectSearchType === 'query' ? querySelect : imageSelect;
+      const params = {
+        params: {
+          key: process.env.REACT_APP_API_KEY,
+          cx: process.env.REACT_APP_API_CX,
+          q: searchQuery,
+        },
+      };
+
+      if (selectSearchType === 'image') {
+        params.params.searchType = 'image';
+      }
+
       console.log(params);
 
       const response = await axios.get(
@@ -50,8 +44,6 @@ export const SearchProvider = ({ children }) => {
 
       setGoogleSearchResults(response.data.items);
       setAllData(response.data);
-      console.log(response.data.items);
-      console.log(allData);
     } catch (error) {
       console.error(error);
       setError(error.message);
@@ -116,6 +108,7 @@ export const SearchProvider = ({ children }) => {
     outputKeywordSearch,
     error,
     allData,
+    selectSearchType,
     handleSearchTypeChange,
     handleEmailOptionChange,
     handleSetJobTitle,

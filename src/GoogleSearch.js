@@ -10,6 +10,7 @@ const GoogleSearch = () => {
     handleSearchSubmit,
     error,
     allData,
+    selectSearchType,
     handleSearchTypeChange,
   } = useSearch();
 
@@ -26,6 +27,7 @@ const GoogleSearch = () => {
             value="query"
             name="searchType"
             onChange={() => handleSearchTypeChange('query')}
+            checked={selectSearchType === 'query'}
           />{' '}
           Query
           <input
@@ -33,6 +35,7 @@ const GoogleSearch = () => {
             value="image"
             name="searchType"
             onChange={() => handleSearchTypeChange('image')}
+            checked={selectSearchType === 'image'}
           />{' '}
           Image
           <input
@@ -46,6 +49,7 @@ const GoogleSearch = () => {
             Search
           </button>
         </form>
+
         <div>
           {googleSearchResults &&
             googleSearchResults.map((result) => {
