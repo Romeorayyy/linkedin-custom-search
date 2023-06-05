@@ -10,6 +10,7 @@ export const useSearch = () => {
 };
 
 export const SearchProvider = ({ children }) => {
+  const [searchQuery, setSearchQuery] = useState('');
   const [googleSearchResults, setGoogleSearchResults] = useState([]);
   const [searchMeta, setSearchMeta] = useState([]);
 
@@ -33,10 +34,22 @@ export const SearchProvider = ({ children }) => {
     }
   };
 
+  const handleSearchQuery = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = async (e) => {
+    e.preventDefault();
+    handleSearch(searchQuery);
+  };
+
   const value = {
     googleSearchResults,
-    setGoogleSearchResults,
     searchMeta,
+    searchQuery,
+    handleSearchSubmit,
+    handleSearchQuery,
+    setGoogleSearchResults,
     setSearchMeta,
     handleSearch,
   };

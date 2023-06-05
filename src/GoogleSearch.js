@@ -1,15 +1,14 @@
 // /Users/randyyono/Desktop/google-search-app/src/GoogleSearch.js
-import React, { useState } from 'react';
+import React from 'react';
 import { useSearch } from './context/SearchContext'; // import useSearch hook
 
 const GoogleSearch = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const { googleSearchResults, handleSearch } = useSearch(); // fetch both googleSearchResults, setGoogleSearchResults, and handleSearch from context
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    handleSearch(searchQuery);
-  };
+  const {
+    googleSearchResults,
+    searchQuery,
+    handleSearchQuery,
+    handleSearchSubmit,
+  } = useSearch();
 
   console.log(googleSearchResults);
 
@@ -17,11 +16,11 @@ const GoogleSearch = () => {
     <div>
       <div className="search-component-container">
         <h1 className="search-header">Custom Google Search</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSearchSubmit}>
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={handleSearchQuery}
             className="search-input"
             placeholder="Enter your search query"
           />
