@@ -30,6 +30,9 @@ export const SearchProvider = ({ children }) => {
             key: process.env.REACT_APP_API_KEY,
             cx: process.env.REACT_APP_API_CX,
             q: searchQuery,
+            siteSearch: 'www.linkedin.com/in/',
+            siteSearchFilter: 'I',
+            filter: '1', // Turn on duplicate content filter
             start: page,
           },
         }

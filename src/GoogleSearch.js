@@ -48,7 +48,6 @@ const GoogleSearch = () => {
                     </a>
                   </h3>
                   <p className="result-url">{result.link}</p>
-                  <p>{result.snippet}</p>
                   {metatags && ( // Add conditional rendering for metatags
                     <div className="metatags">
                       {metatags['twitter:card'] &&
