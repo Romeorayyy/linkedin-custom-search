@@ -1,6 +1,6 @@
 // /Users/randyyono/Desktop/google-search-app/src/context/SearchContext.js
 
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 const SearchContext = createContext();
@@ -21,6 +21,7 @@ export const SearchProvider = ({ children }) => {
   const [allData, setAllData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [jobSearchQuery, setJobSearchQuery] = useState(''); // Add this line
+  const [metaData, setMetaData] = useState([]); // New state variable
 
   const handleSearch = async (searchQuery, page, appendResults = false) => {
     try {
@@ -31,6 +32,7 @@ export const SearchProvider = ({ children }) => {
             key: process.env.REACT_APP_API_KEY,
             cx: process.env.REACT_APP_API_CX,
             q: searchQuery,
+            num: 5,
             siteSearch: 'www.linkedin.com/in/',
             siteSearchFilter: 'I',
             filter: '0',
@@ -58,7 +60,12 @@ export const SearchProvider = ({ children }) => {
     }
   };
 
-  console.log(allData.queries);
+  useEffect(() => {
+    const newMetaData = googleSearchResults.map(
+      (result) => result.pagemap?.metatags?.[0]
+    );
+    setMetaData(newMetaData);
+  }, [googleSearchResults]);
 
   const handleSearchQuery = (e) => {
     setSearchQuery(e.target.value);
@@ -70,7 +77,7 @@ export const SearchProvider = ({ children }) => {
   };
 
   const handleLoadMore = async () => {
-    const nextPage = currentPage + 10; // calculate the next page value
+    const nextPage = currentPage + 5; // calculate the next page value
     setCurrentPage(nextPage); // update the current page
     await handleSearch(jobSearchQuery || searchQuery, nextPage, true); // Add true to append results
   };
@@ -120,6 +127,7 @@ export const SearchProvider = ({ children }) => {
     outputKeywordSearch,
     error, // get the error from the context
     allData,
+    metaData,
     handleLoadMore,
     handleEmailOptionChange,
     handleSetJobTitle,

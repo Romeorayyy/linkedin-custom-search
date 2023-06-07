@@ -2,17 +2,11 @@
 import React from 'react';
 import { useSearch } from './context/SearchContext';
 import Results from './components/Results'; // import Results component
+import ProfileCard from './components/ProfileCard'; // import ProfileCard component
 
 const GoogleSearch = () => {
-  const {
-    googleSearchResults,
-    searchQuery,
-    handleSearchQuery,
-    handleSearchSubmit,
-    handleLoadMore,
-    error,
-    allData,
-  } = useSearch();
+  const { searchQuery, handleSearchQuery, handleSearchSubmit, error, allData } =
+    useSearch();
 
   console.log(allData);
 
@@ -33,7 +27,7 @@ const GoogleSearch = () => {
             Search
           </button>
         </form>
-        <Results googleSearchResults={googleSearchResults} />{' '}
+        <Results /> <ProfileCard />
       </div>
     </div>
   );
