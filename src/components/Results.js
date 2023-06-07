@@ -1,50 +1,53 @@
-// /Users/randyyono/Desktop/google-search-app/src/Results.js
+// /Users/randyyono/Desktop/google-search-app/src/components/Results.js
+
 import React from 'react';
 import { useSearch } from '../context/SearchContext';
 
 const Results = () => {
-  const { googleSearchResults, handleLoadMore } = useSearch();
+  const { handleLoadMore, metaData } = useSearch();
 
-  console.log(googleSearchResults);
+  console.log(metaData);
   return (
     <div>
-      {googleSearchResults &&
-        googleSearchResults.map((result, index) => {
-          const metatags = result.pagemap?.metatags?.[0];
+      {metaData &&
+        metaData.map((metatags) => {
           return (
-            <div className="search-result" key={index}>
+            <div className="search-result" key={metatags['og:url']}>
               <h3 className="result-title">
-                <a href={result.link} target="_blank" rel="noopener noreferrer">
-                  {result.title}
+                <a
+                  href={metatags['og:url']}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {metatags['og:title']}
                 </a>
               </h3>
-              <p className="result-url">{result.link}</p>
-              {metatags && (
-                <div className="metatags">
-                  {metatags['twitter:card'] &&
-                    metatags['twitter:title'] &&
-                    metatags['twitter:description'] &&
-                    metatags['twitter:image'] && (
-                      <div className="twitter-card">
-                        <img
-                          src={metatags['twitter:image']}
-                          alt={metatags['twitter:title']}
-                        />
-                        <h4>{metatags['twitter:title']}</h4>
-                        <p>
-                          {metatags['twitter:description'].replace(
-                            /<[^>]+>/g,
-                            ''
-                          )}
-                        </p>
-                      </div>
-                    )}
-                </div>
-              )}
+              <p className="result-url">{metatags['og:url']}</p>
+              {metatags['twitter:card'] &&
+                metatags['twitter:title'] &&
+                metatags['twitter:description'] &&
+                metatags['twitter:image'] && (
+                  <div className="metatags">
+                    <div className="twitter-card">
+                      <img
+                        style={{ width: '300px' }}
+                        src={metatags['twitter:image']}
+                        alt={metatags['twitter:title']}
+                      />
+                      <h4>{metatags['twitter:title']}</h4>
+                      <p>
+                        {metatags['twitter:description'].replace(
+                          /<[^>]+>/g,
+                          ''
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                )}
             </div>
           );
         })}
-      {googleSearchResults.length > 0 && (
+      {metaData.length > 0 && (
         <button onClick={handleLoadMore} className="load-more-button">
           Load More
         </button>
