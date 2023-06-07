@@ -22,6 +22,7 @@ export const SearchProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobSearchQuery, setJobSearchQuery] = useState(''); // Add this line
   const [metaData, setMetaData] = useState([]); // New state variable
+  const [dataGetter, setDataGetter] = useState([]);
 
   const handleSearch = async (searchQuery, page, appendResults = false) => {
     try {
@@ -32,7 +33,7 @@ export const SearchProvider = ({ children }) => {
             key: process.env.REACT_APP_API_KEY,
             cx: process.env.REACT_APP_API_CX,
             q: searchQuery,
-            num: 5,
+            num: 2,
             siteSearch: 'www.linkedin.com/in/',
             siteSearchFilter: 'I',
             filter: '0',
@@ -60,12 +61,40 @@ export const SearchProvider = ({ children }) => {
     }
   };
 
+  console.log(googleSearchResults);
+
+  console.log(googleSearchResults[0]?.snippet);
+  console.log(googleSearchResults[0]?.htmlSnippet);
+  console.log(googleSearchResults[0]?.pagemap?.metatags[0]['og:description']);
+  console.log(
+    googleSearchResults[0]?.pagemap?.metatags[0]['twitter:description']
+  );
+
   useEffect(() => {
     const newMetaData = googleSearchResults.map(
       (result) => result.pagemap?.metatags?.[0]
     );
     setMetaData(newMetaData);
   }, [googleSearchResults]);
+
+  useEffect(() => {
+    if (Array.isArray(googleSearchResults)) {
+      const newDataGetter = googleSearchResults.map((item) => ({
+        snippet: item?.snippet,
+        htmlSnippet: item?.htmlSnippet,
+        ogDescription: item?.pagemap?.metatags?.[0]?.['og:description'],
+        twitterDescription:
+          item?.pagemap?.metatags?.[0]?.['twitter:description'],
+      }));
+
+      setDataGetter(newDataGetter);
+    } else {
+      // `googleSearchResults` is not an array; handle this case appropriately
+      setDataGetter([]);
+    }
+  }, [googleSearchResults]);
+
+  console.log(dataGetter);
 
   const handleSearchQuery = (e) => {
     setSearchQuery(e.target.value);
@@ -77,7 +106,7 @@ export const SearchProvider = ({ children }) => {
   };
 
   const handleLoadMore = async () => {
-    const nextPage = currentPage + 5; // calculate the next page value
+    const nextPage = currentPage + 1; // calculate the next page value
     setCurrentPage(nextPage); // update the current page
     await handleSearch(jobSearchQuery || searchQuery, nextPage, true); // Add true to append results
   };
