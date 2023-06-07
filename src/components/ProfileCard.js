@@ -1,10 +1,13 @@
-// /Users/randyyono/Desktop/google-search-app/src/components/ProfileCard.js
-
 import React from 'react';
 import { useSearch } from '../context/SearchContext';
 
 const ProfileCard = () => {
   const { metaData, emailsData } = useSearch();
+
+  const getEmailFromUrl = (url) => {
+    const emailData = emailsData.find((item) => item.ogUrl === url);
+    return emailData ? emailData.email : null;
+  };
 
   return (
     <div
@@ -17,6 +20,7 @@ const ProfileCard = () => {
     >
       {metaData &&
         metaData.map((metatags, index) => {
+          const email = getEmailFromUrl(metatags['og:url']);
           return metatags ? (
             <div
               className="profile-card"
@@ -30,6 +34,7 @@ const ProfileCard = () => {
               />
               <h4>{metatags['twitter:title']}</h4>
               <p>{metatags['twitter:description'].replace(/<[^>]+>/g, '')}</p>
+              {email && <p>Email: {email}</p>}
             </div>
           ) : null;
         })}
