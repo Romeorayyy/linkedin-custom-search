@@ -62,15 +62,6 @@ export const SearchProvider = ({ children }) => {
     }
   };
 
-  console.log(googleSearchResults);
-
-  console.log(googleSearchResults[0]?.snippet);
-  console.log(googleSearchResults[0]?.htmlSnippet);
-  console.log(googleSearchResults[0]?.pagemap?.metatags[0]['og:description']);
-  console.log(
-    googleSearchResults[0]?.pagemap?.metatags[0]['twitter:description']
-  );
-
   useEffect(() => {
     const newMetaData = googleSearchResults.map(
       (result) => result.pagemap?.metatags?.[0]
@@ -81,6 +72,7 @@ export const SearchProvider = ({ children }) => {
   useEffect(() => {
     if (Array.isArray(googleSearchResults)) {
       const newDataGetter = googleSearchResults.map((item) => ({
+        ogUrl: item?.pagemap?.metatags[0]['og:url'],
         snippet: item?.snippet,
         htmlSnippet: item?.htmlSnippet,
         ogDescription: item?.pagemap?.metatags?.[0]?.['og:description'],
@@ -113,19 +105,17 @@ export const SearchProvider = ({ children }) => {
           'twitterDescription',
         ];
         let email = '';
-        let foundKey = '';
         for (let key of keysToSearch) {
           if (data[key]) {
             email = extractEmails(data[key]);
             if (email) {
-              foundKey = key;
-              break; // Stop searching if an email is found
+              return { email, ogUrl: data.ogUrl };
             }
           }
         }
-        return email ? { email, key: foundKey } : null; // Return the email and the key
+        return null; // Return null if no email was found
       })
-      .filter((item) => item !== null); // Remove items with no email found
+      .filter((item) => item !== null); // Filter out null items
 
     setEmailsData(extractedEmails);
   }, [dataGetter]);
