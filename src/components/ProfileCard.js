@@ -4,7 +4,7 @@ import React from 'react';
 import { useSearch } from '../context/SearchContext';
 
 const ProfileCard = () => {
-  const { metaData } = useSearch();
+  const { metaData, emailsData } = useSearch();
 
   return (
     <div
