@@ -20,6 +20,7 @@ export const SearchProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [allData, setAllData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [jobSearchQuery, setJobSearchQuery] = useState(''); // Add this line
 
   const handleSearch = async (searchQuery, page) => {
     try {
@@ -32,7 +33,7 @@ export const SearchProvider = ({ children }) => {
             q: searchQuery,
             siteSearch: 'www.linkedin.com/in/',
             siteSearchFilter: 'I',
-            filter: '1', // Turn on duplicate content filter
+            filter: '0',
             start: page,
           },
         }
@@ -62,19 +63,19 @@ export const SearchProvider = ({ children }) => {
   const handleLoadMore = async () => {
     const nextPage = currentPage + 10; // calculate the next page value
     setCurrentPage(nextPage); // update the current page
-    await handleSearch(searchQuery, nextPage); // fetch the next page of results
+    await handleSearch(jobSearchQuery || searchQuery, nextPage); // Modify this line
   };
 
   // JobSearchComponent.js
-
-  const handleSpecificSearchSubmit = (e) => {
+  // JobSearchComponent.js
+  const handleSpecificSearchSubmit = async (e) => {
     e.preventDefault();
-
     const formattedJobTitle = `${formatKeywords(jobTitle)}`;
     const formattedLocationKeywords = `${formatKeywords(locationKeywords)}`;
-
     const outputText = `${formattedJobTitle} ${formattedLocationKeywords} -intitle:"profiles" -inurl:"dir/ " email "${emailOption}" site:www.linkedin.com/in/ OR site:www.linkedin.com/pub/`;
     setOutputKeyWordSearch(outputText);
+    setJobSearchQuery(outputText); // Add this line
+    await handleSearch(outputText);
   };
 
   const formatKeywords = (keywords) => {

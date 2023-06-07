@@ -34,10 +34,10 @@ const GoogleSearch = () => {
         </form>
         <div>
           {googleSearchResults &&
-            googleSearchResults.map((result) => {
+            googleSearchResults.map((result, index) => {
               const metatags = result.pagemap?.metatags?.[0]; // Use optional chaining to handle undefined values
               return (
-                <div className="search-result" key={result.link}>
+                <div className="search-result" key={result.index}>
                   <h3 className="result-title">
                     <a
                       href={result.link}

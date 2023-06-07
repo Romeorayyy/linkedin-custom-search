@@ -1,3 +1,5 @@
+// /Users/randyyono/Desktop/google-search-app/src/components/JobSearchComponent.js
+
 import React from 'react';
 import { useSearch } from '../context/SearchContext'; // import useSearch hook
 
@@ -11,6 +13,7 @@ const JobSearchComponent = () => {
     handleEmailOptionChange,
     emailOption,
     handleSpecificSearchSubmit,
+    handleLoadMore,
   } = useSearch();
 
   return (
@@ -93,6 +96,9 @@ const JobSearchComponent = () => {
           {outputKeywordSearch}
         </h3>
       )}
+      <button onClick={handleLoadMore} className="load-more-button">
+        Load More
+      </button>
     </div>
   );
 };
