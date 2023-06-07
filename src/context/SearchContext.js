@@ -22,7 +22,7 @@ export const SearchProvider = ({ children }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [jobSearchQuery, setJobSearchQuery] = useState(''); // Add this line
 
-  const handleSearch = async (searchQuery, page) => {
+  const handleSearch = async (searchQuery, page, appendResults = false) => {
     try {
       const response = await axios.get(
         'https://www.googleapis.com/customsearch/v1',
@@ -38,8 +38,17 @@ export const SearchProvider = ({ children }) => {
           },
         }
       );
-      // set results to the context state
-      setGoogleSearchResults([...googleSearchResults, ...response.data.items]);
+
+      if (appendResults) {
+        // Append results to the existing ones if appendResults is true
+        setGoogleSearchResults([
+          ...googleSearchResults,
+          ...response.data.items,
+        ]);
+      } else {
+        // Replace the existing results if appendResults is false
+        setGoogleSearchResults(response.data.items);
+      }
 
       console.log(response.data.items);
       setAllData(response.data);
@@ -57,25 +66,25 @@ export const SearchProvider = ({ children }) => {
 
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
-    handleSearch(searchQuery);
+    handleSearch(searchQuery, 1, false);
   };
 
   const handleLoadMore = async () => {
     const nextPage = currentPage + 10; // calculate the next page value
     setCurrentPage(nextPage); // update the current page
-    await handleSearch(jobSearchQuery || searchQuery, nextPage); // Modify this line
+    await handleSearch(jobSearchQuery || searchQuery, nextPage, true); // Add true to append results
   };
 
-  // JobSearchComponent.js
   // JobSearchComponent.js
   const handleSpecificSearchSubmit = async (e) => {
     e.preventDefault();
     const formattedJobTitle = `${formatKeywords(jobTitle)}`;
     const formattedLocationKeywords = `${formatKeywords(locationKeywords)}`;
     const outputText = `${formattedJobTitle} ${formattedLocationKeywords} -intitle:"profiles" -inurl:"dir/ " email "${emailOption}" site:www.linkedin.com/in/ OR site:www.linkedin.com/pub/`;
+
     setOutputKeyWordSearch(outputText);
     setJobSearchQuery(outputText); // Add this line
-    await handleSearch(outputText);
+    await handleSearch(outputText, 1, false);
   };
 
   const formatKeywords = (keywords) => {
