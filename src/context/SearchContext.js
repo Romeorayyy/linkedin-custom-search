@@ -18,8 +18,10 @@ export const SearchProvider = ({ children }) => {
   const [googleSearchResults, setGoogleSearchResults] = useState([]);
   const [searchMeta, setSearchMeta] = useState([]);
   const [error, setError] = useState(null);
+  const [allData, setAllData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const handleSearch = async (searchQuery) => {
+  const handleSearch = async (searchQuery, page) => {
     try {
       const response = await axios.get(
         'https://www.googleapis.com/customsearch/v1',
@@ -28,17 +30,22 @@ export const SearchProvider = ({ children }) => {
             key: process.env.REACT_APP_API_KEY,
             cx: process.env.REACT_APP_API_CX,
             q: searchQuery,
+            start: page,
           },
         }
       );
       // set results to the context state
-      setGoogleSearchResults(response.data.items);
+      setGoogleSearchResults([...googleSearchResults, ...response.data.items]);
+
       console.log(response.data.items);
+      setAllData(response.data);
     } catch (error) {
       console.error(error);
       setError(error.message); // set the error message
     }
   };
+
+  console.log(allData.queries);
 
   const handleSearchQuery = (e) => {
     setSearchQuery(e.target.value);
@@ -47,6 +54,12 @@ export const SearchProvider = ({ children }) => {
   const handleSearchSubmit = async (e) => {
     e.preventDefault();
     handleSearch(searchQuery);
+  };
+
+  const handleLoadMore = async () => {
+    const nextPage = currentPage + 10; // calculate the next page value
+    setCurrentPage(nextPage); // update the current page
+    await handleSearch(searchQuery, nextPage); // fetch the next page of results
   };
 
   // JobSearchComponent.js
@@ -93,6 +106,8 @@ export const SearchProvider = ({ children }) => {
     emailOption,
     outputKeywordSearch,
     error, // get the error from the context
+    allData,
+    handleLoadMore,
     handleEmailOptionChange,
     handleSetJobTitle,
     handleSetLocationKeyword,
