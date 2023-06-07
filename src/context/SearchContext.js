@@ -23,6 +23,7 @@ export const SearchProvider = ({ children }) => {
   const [jobSearchQuery, setJobSearchQuery] = useState(''); // Add this line
   const [metaData, setMetaData] = useState([]); // New state variable
   const [dataGetter, setDataGetter] = useState([]);
+  const [emailsData, setEmailsData] = useState([]);
 
   const handleSearch = async (searchQuery, page, appendResults = false) => {
     try {
@@ -33,7 +34,7 @@ export const SearchProvider = ({ children }) => {
             key: process.env.REACT_APP_API_KEY,
             cx: process.env.REACT_APP_API_CX,
             q: searchQuery,
-            num: 2,
+            num: 10,
             siteSearch: 'www.linkedin.com/in/',
             siteSearchFilter: 'I',
             filter: '0',
@@ -96,6 +97,41 @@ export const SearchProvider = ({ children }) => {
 
   console.log(dataGetter);
 
+  const extractEmails = (text) => {
+    const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
+    const found = text.match(emailRegex);
+    return found ? found[0] : '';
+  };
+
+  useEffect(() => {
+    const extractedEmails = dataGetter
+      .map((data, index) => {
+        const keysToSearch = [
+          'snippet',
+          'htmlSnippet',
+          'ogDescription',
+          'twitterDescription',
+        ];
+        let email = '';
+        let foundKey = '';
+        for (let key of keysToSearch) {
+          if (data[key]) {
+            email = extractEmails(data[key]);
+            if (email) {
+              foundKey = key;
+              break; // Stop searching if an email is found
+            }
+          }
+        }
+        return email ? { email, key: foundKey } : null; // Return the email and the key
+      })
+      .filter((item) => item !== null); // Remove items with no email found
+
+    setEmailsData(extractedEmails);
+  }, [dataGetter]);
+
+  console.log(emailsData);
+
   const handleSearchQuery = (e) => {
     setSearchQuery(e.target.value);
   };
@@ -157,6 +193,7 @@ export const SearchProvider = ({ children }) => {
     error, // get the error from the context
     allData,
     metaData,
+    emailsData,
     handleLoadMore,
     handleEmailOptionChange,
     handleSetJobTitle,
