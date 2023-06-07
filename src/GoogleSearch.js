@@ -1,6 +1,7 @@
 // /Users/randyyono/Desktop/google-search-app/src/GoogleSearch.js
 import React from 'react';
-import { useSearch } from './context/SearchContext'; // import useSearch hook
+import { useSearch } from './context/SearchContext';
+import Results from './components/Results'; // import Results component
 
 const GoogleSearch = () => {
   const {
@@ -32,51 +33,7 @@ const GoogleSearch = () => {
             Search
           </button>
         </form>
-        <div>
-          {googleSearchResults &&
-            googleSearchResults.map((result, index) => {
-              const metatags = result.pagemap?.metatags?.[0]; // Use optional chaining to handle undefined values
-              return (
-                <div className="search-result" key={result.index}>
-                  <h3 className="result-title">
-                    <a
-                      href={result.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {result.title}
-                    </a>
-                  </h3>
-                  <p className="result-url">{result.link}</p>
-                  {metatags && ( // Add conditional rendering for metatags
-                    <div className="metatags">
-                      {metatags['twitter:card'] &&
-                        metatags['twitter:title'] &&
-                        metatags['twitter:description'] &&
-                        metatags['twitter:image'] && (
-                          <div className="twitter-card">
-                            <img
-                              src={metatags['twitter:image']}
-                              alt={metatags['twitter:title']}
-                            />
-                            <h4>{metatags['twitter:title']}</h4>
-                            <p>
-                              {metatags['twitter:description'].replace(
-                                /<[^>]+>/g,
-                                ''
-                              )}
-                            </p>
-                          </div>
-                        )}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-        </div>
-        <button onClick={handleLoadMore} className="load-more-button">
-          Load More
-        </button>
+        <Results googleSearchResults={googleSearchResults} />{' '}
       </div>
     </div>
   );
