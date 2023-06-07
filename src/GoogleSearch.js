@@ -9,12 +9,7 @@ const GoogleSearch = () => {
     handleSearchQuery,
     handleSearchSubmit,
     error,
-    allData,
-    selectSearchType,
-    handleSearchTypeChange,
   } = useSearch();
-
-  console.log(allData);
 
   return (
     <div>
@@ -22,22 +17,6 @@ const GoogleSearch = () => {
         <h1 className="search-header">Custom Google Search</h1>
         {error && <div className="error">{error}</div>}
         <form onSubmit={handleSearchSubmit}>
-          <input
-            type="radio"
-            value="query"
-            name="searchType"
-            onChange={() => handleSearchTypeChange('query')}
-            checked={selectSearchType === 'query'}
-          />{' '}
-          Query
-          <input
-            type="radio"
-            value="image"
-            name="searchType"
-            onChange={() => handleSearchTypeChange('image')}
-            checked={selectSearchType === 'image'}
-          />{' '}
-          Image
           <input
             type="text"
             value={searchQuery}
@@ -49,49 +28,46 @@ const GoogleSearch = () => {
             Search
           </button>
         </form>
-
         <div>
-          {googleSearchResults &&
-            googleSearchResults.map((result) => {
-              const metatags = result.pagemap?.metatags?.[0]; // Use optional chaining to handle undefined values
-              return (
-                <div className="search-result" key={result.link}>
-                  <h3 className="result-title">
-                    <a
-                      href={result.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {result.title}
-                    </a>
-                  </h3>
-                  <p className="result-url">{result.link}</p>
-                  <p>{result.snippet}</p>
-                  {metatags && ( // Add conditional rendering for metatags
-                    <div className="metatags">
-                      {metatags['twitter:card'] &&
-                        metatags['twitter:title'] &&
-                        metatags['twitter:description'] &&
-                        metatags['twitter:image'] && (
-                          <div className="twitter-card">
-                            <img
-                              src={metatags['twitter:image']}
-                              alt={metatags['twitter:title']}
-                            />
-                            <h4>{metatags['twitter:title']}</h4>
-                            <p>
-                              {metatags['twitter:description'].replace(
-                                /<[^>]+>/g,
-                                ''
-                              )}
-                            </p>
-                          </div>
-                        )}
-                    </div>
-                  )}
+          {googleSearchResults.map((result) => {
+            const metatags = result.pagemap.metatags[0];
+            return (
+              <div className="search-result" key={result.link}>
+                <h3 className="result-title">
+                  <a
+                    href={result.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {result.title}
+                  </a>
+                </h3>
+                <p className="result-url">{result.link}</p>
+                <p>{result.snippet}</p>
+                {/* add new section for metatags */}
+                <div className="metatags">
+                  {metatags['twitter:card'] &&
+                    metatags['twitter:title'] &&
+                    metatags['twitter:description'] &&
+                    metatags['twitter:image'] && (
+                      <div className="twitter-card">
+                        <img
+                          src={metatags['twitter:image']}
+                          alt={metatags['twitter:title']}
+                        />
+                        <h4>{metatags['twitter:title']}</h4>
+                        <p>
+                          {metatags['twitter:description'].replace(
+                            /<[^>]+>/g,
+                            ''
+                          )}
+                        </p>
+                      </div>
+                    )}
                 </div>
-              );
-            })}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

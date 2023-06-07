@@ -18,40 +18,26 @@ export const SearchProvider = ({ children }) => {
   const [googleSearchResults, setGoogleSearchResults] = useState([]);
   const [searchMeta, setSearchMeta] = useState([]);
   const [error, setError] = useState(null);
-  const [allData, setAllData] = useState([]);
-  const [selectSearchType, setSelectSearchType] = useState('query');
 
-  const handleSearch = async () => {
+  const handleSearch = async (searchQuery) => {
     try {
-      const params = {
-        params: {
-          key: process.env.REACT_APP_API_KEY,
-          cx: process.env.REACT_APP_API_CX,
-          q: searchQuery,
-        },
-      };
-
-      if (selectSearchType === 'image') {
-        params.params.searchType = 'image';
-      }
-
-      console.log(params);
-
       const response = await axios.get(
         'https://www.googleapis.com/customsearch/v1',
-        params
+        {
+          params: {
+            key: process.env.REACT_APP_API_KEY,
+            cx: process.env.REACT_APP_API_CX,
+            q: searchQuery,
+          },
+        }
       );
-
+      // set results to the context state
       setGoogleSearchResults(response.data.items);
-      setAllData(response.data);
+      console.log(response.data.items);
     } catch (error) {
       console.error(error);
-      setError(error.message);
+      setError(error.message); // set the error message
     }
-  };
-
-  const handleSearchTypeChange = (value) => {
-    setSelectSearchType(value);
   };
 
   const handleSearchQuery = (e) => {
@@ -106,10 +92,7 @@ export const SearchProvider = ({ children }) => {
     searchQuery,
     emailOption,
     outputKeywordSearch,
-    error,
-    allData,
-    selectSearchType,
-    handleSearchTypeChange,
+    error, // get the error from the context
     handleEmailOptionChange,
     handleSetJobTitle,
     handleSetLocationKeyword,
