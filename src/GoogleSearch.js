@@ -8,8 +8,6 @@ const GoogleSearch = () => {
   const { searchQuery, handleSearchQuery, handleSearchSubmit, error, allData } =
     useSearch();
 
-  console.log(allData);
-
   return (
     <div>
       <div className="search-component-container">
