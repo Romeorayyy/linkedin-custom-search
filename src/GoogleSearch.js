@@ -69,16 +69,6 @@ const MergedSearch = () => {
           </button>
         </form>
 
-        {outputKeywordSearch && (
-          <h3 style={{ marginTop: '20px', width: '100%' }}>
-            {outputKeywordSearch}
-          </h3>
-        )}
-
-        <button onClick={handleLoadMore} className="load-more-button">
-          Load More
-        </button>
-
         <Results />
         <ProfileCard />
       </div>
