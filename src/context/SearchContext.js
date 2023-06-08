@@ -34,7 +34,6 @@ export const SearchProvider = ({ children }) => {
             key: process.env.REACT_APP_API_KEY,
             cx: process.env.REACT_APP_API_CX,
             q: searchQuery,
-            num: 10,
             siteSearch: 'www.linkedin.com/in/',
             siteSearchFilter: 'I',
             filter: '0',
@@ -61,6 +60,8 @@ export const SearchProvider = ({ children }) => {
       setError(error.message); // set the error message
     }
   };
+
+  console.log(allData);
 
   useEffect(() => {
     const newMetaData = googleSearchResults.map(
@@ -132,7 +133,7 @@ export const SearchProvider = ({ children }) => {
   };
 
   const handleLoadMore = async () => {
-    const nextPage = currentPage + 1; // calculate the next page value
+    const nextPage = currentPage + 10; // calculate the next page value
     setCurrentPage(nextPage); // update the current page
     await handleSearch(jobSearchQuery || searchQuery, nextPage, true); // Add true to append results
   };
