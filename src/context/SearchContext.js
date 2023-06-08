@@ -137,15 +137,13 @@ export const SearchProvider = ({ children }) => {
   };
 
   // JobSearchComponent.js
-  const handleSpecificSearchSubmit = async (e) => {
+  const handleSpecificSearchSubmit = (e) => {
     e.preventDefault();
     const formattedJobTitle = `${formatKeywords(jobTitle)}`;
     const formattedLocationKeywords = `${formatKeywords(locationKeywords)}`;
     const outputText = `${formattedJobTitle} ${formattedLocationKeywords} -intitle:"profiles" -inurl:"dir/ " email "${emailOption}" site:www.linkedin.com/in/ OR site:www.linkedin.com/pub/`;
-
     setOutputKeyWordSearch(outputText);
-    setJobSearchQuery(outputText); // Add this line
-    await handleSearch(outputText, 1, false);
+    setSearchQuery(outputText); // Set the generated query as the search query
   };
 
   const formatKeywords = (keywords) => {

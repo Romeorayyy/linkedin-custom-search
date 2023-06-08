@@ -1,18 +1,30 @@
-// /Users/randyyono/Desktop/google-search-app/src/GoogleSearch.js
+// /Users/randyyono/Desktop/google-search-app/src/MergedSearch.js
 import React from 'react';
 import { useSearch } from './context/SearchContext';
-import Results from './components/Results'; // import Results component
-import ProfileCard from './components/ProfileCard'; // import ProfileCard component
+import Results from './components/Results';
+import ProfileCard from './components/ProfileCard';
 
-const GoogleSearch = () => {
-  const { searchQuery, handleSearchQuery, handleSearchSubmit, error, allData } =
-    useSearch();
+const MergedSearch = () => {
+  const {
+    searchQuery,
+    handleSearchQuery,
+    handleSearchSubmit,
+    error,
+    locationKeywords,
+    jobTitle,
+    outputKeywordSearch,
+    handleSetLocationKeyword,
+    handleSetJobTitle,
+    handleSpecificSearchSubmit,
+    handleLoadMore,
+  } = useSearch();
 
   return (
     <div>
       <div className="search-component-container">
-        <h1 className="search-header">Custom Google Search</h1>
+        <h1 className="search-header">Merged Custom Google Search</h1>
         {error && <div className="error">{error}</div>}
+
         <form onSubmit={handleSearchSubmit}>
           <input
             type="text"
@@ -25,10 +37,53 @@ const GoogleSearch = () => {
             Search
           </button>
         </form>
-        <Results /> <ProfileCard />
+
+        {/* Job search form */}
+        <form onSubmit={handleSpecificSearchSubmit}>
+          <div style={{ marginBottom: '10px' }}>
+            <label htmlFor="jobTitle">Job Title:</label>
+            <input
+              type="text"
+              id="jobTitle"
+              value={jobTitle}
+              onChange={handleSetJobTitle}
+              style={{ width: '100%', padding: '5px' }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '10px' }}>
+            <label htmlFor="locationKeywords">
+              Location or Keywords to Include:
+            </label>
+            <input
+              type="text"
+              id="locationKeywords"
+              value={locationKeywords}
+              onChange={handleSetLocationKeyword}
+              style={{ width: '100%', padding: '5px' }}
+            />
+          </div>
+
+          <button type="submit" style={{ padding: '5px 10px' }}>
+            Generate Query
+          </button>
+        </form>
+
+        {outputKeywordSearch && (
+          <h3 style={{ marginTop: '20px', width: '100%' }}>
+            {outputKeywordSearch}
+          </h3>
+        )}
+
+        <button onClick={handleLoadMore} className="load-more-button">
+          Load More
+        </button>
+
+        <Results />
+        <ProfileCard />
       </div>
     </div>
   );
 };
 
-export default GoogleSearch;
+export default MergedSearch;
