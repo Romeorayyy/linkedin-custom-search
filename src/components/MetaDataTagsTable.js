@@ -23,7 +23,7 @@ const MetaDataTagsTable = () => {
     padding: '10px',
   };
 
-  console.log(googleSearchResults);
+  // console.log(googleSearchResults);
 
   return (
     <>

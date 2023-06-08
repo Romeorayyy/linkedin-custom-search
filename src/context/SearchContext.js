@@ -60,9 +60,7 @@ export const SearchProvider = ({ children }) => {
       setError(error.message); // set the error message
     }
   };
-
   console.log(allData);
-
   useEffect(() => {
     const newMetaData = googleSearchResults.map(
       (result) => result.pagemap?.metatags?.[0]
@@ -88,7 +86,7 @@ export const SearchProvider = ({ children }) => {
     }
   }, [googleSearchResults]);
 
-  console.log(dataGetter);
+  // console.log(dataGetter);
 
   const extractEmails = (text) => {
     const emailRegex = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g;
@@ -121,7 +119,7 @@ export const SearchProvider = ({ children }) => {
     setEmailsData(extractedEmails);
   }, [dataGetter]);
 
-  console.log(emailsData);
+  // console.log(emailsData);
 
   const handleSearchQuery = (e) => {
     setSearchQuery(e.target.value);
