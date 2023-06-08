@@ -12,11 +12,9 @@ const MergedSearch = () => {
     error,
     locationKeywords,
     jobTitle,
-    outputKeywordSearch,
     handleSetLocationKeyword,
     handleSetJobTitle,
     handleSpecificSearchSubmit,
-    handleLoadMore,
   } = useSearch();
 
   return (
