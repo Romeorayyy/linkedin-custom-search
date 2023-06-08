@@ -6,7 +6,6 @@ import { useSearch } from '../context/SearchContext';
 const Results = () => {
   const { handleLoadMore, metaData } = useSearch();
 
-  console.log(metaData);
   return (
     <div>
       {metaData &&
