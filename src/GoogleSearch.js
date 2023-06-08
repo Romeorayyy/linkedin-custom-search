@@ -1,4 +1,4 @@
-// /Users/randyyono/Desktop/google-search-app/src/MergedSearch.js
+// /Users/randyyono/Desktop/google-search-app/src/GoogleSearch.js
 import React from 'react';
 import { useSearch } from './context/SearchContext';
 import Results from './components/Results';
