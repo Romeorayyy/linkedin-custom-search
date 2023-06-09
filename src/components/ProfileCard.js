@@ -6,8 +6,11 @@ import {
   MDBCardBody,
   MDBCardTitle,
   MDBCardText,
+  MDBListGroupItem,
+  MDBCardLink,
   MDBRow,
   MDBCol,
+  MDBListGroup,
 } from 'mdb-react-ui-kit';
 
 const ProfileCard = () => {
@@ -32,6 +35,8 @@ const ProfileCard = () => {
     return words.length > 15 ? words.slice(0, 15).join(' ') + '...' : desc;
   };
 
+  console.log(metaData);
+
   return (
     <MDBRow className="row-cols-1 row-cols-md-3 g-4">
       {metaData &&
@@ -51,7 +56,17 @@ const ProfileCard = () => {
                 />
                 <MDBCardBody>
                   <MDBCardTitle>{metatags['twitter:title']}</MDBCardTitle>
-                  {email && <p>Email: {email}</p>}
+                  <MDBListGroup className="py-3">
+                    <MDBListGroupItem>
+                      First Name: {metatags['profile:first_name']}
+                    </MDBListGroupItem>
+                    <MDBListGroupItem>
+                      Last Name: {metatags['profile:last_name']}
+                    </MDBListGroupItem>
+                    {email && (
+                      <MDBListGroupItem>Email: {email}</MDBListGroupItem>
+                    )}
+                  </MDBListGroup>
                   <MDBCardText>
                     {expanded[metatags['og:url']]
                       ? description
@@ -63,6 +78,11 @@ const ProfileCard = () => {
                       {expanded[metatags['og:url']] ? ' See less' : ' See more'}
                     </span>
                   </MDBCardText>
+                </MDBCardBody>
+                <MDBCardBody>
+                  <MDBCardLink href={metatags['og:url']}>
+                    Open Linkedin Profile
+                  </MDBCardLink>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
