@@ -15,45 +15,51 @@ const Results = () => {
   return (
     <div>
       {metaData &&
-        metaData.map((metatags) => {
+        metaData.map((metatags, index) => {
+          const ogUrl = metatags && metatags['og:url'];
+          const ogTitle = metatags && metatags['og:title'];
+          const twitterCard = metatags && metatags['twitter:card'];
+          const twitterTitle = metatags && metatags['twitter:title'];
+          const twitterDescription =
+            metatags && metatags['twitter:description'];
+
+          if (!ogUrl) {
+            return null;
+          }
+
           return (
-            <MDBCard className="mb-3" key={metatags['og:url']}>
+            <MDBCard className="mb-3" key={index}>
               <MDBCardBody>
                 <MDBCardTitle className="fs-5 fw-bold text-primary">
                   <a
-                    href={metatags['og:url']}
+                    href={ogUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-primary"
                   >
-                    {metatags['og:title']}
+                    {ogTitle}
                   </a>
                 </MDBCardTitle>
                 <MDBTypography className="text-success mb-2" variant="muted">
-                  {metatags['og:url']}
+                  {ogUrl}
                 </MDBTypography>
-                {metatags['twitter:card'] &&
-                  metatags['twitter:title'] &&
-                  metatags['twitter:description'] && (
-                    <div className="fw-bold">
-                      <MDBTypography className="fw-bold" variant="muted">
-                        <MDBCardText>
-                          <MDBTypography className="fw-bold">
-                            {metatags['twitter:title']}
-                          </MDBTypography>
-                          {metatags['twitter:description'].replace(
-                            /<[^>]+>/g,
-                            ''
-                          )}
-                        </MDBCardText>
-                      </MDBTypography>
-                    </div>
-                  )}
+                {twitterCard && twitterTitle && twitterDescription && (
+                  <div className="fw-bold">
+                    <MDBTypography className="fw-bold" variant="muted">
+                      <MDBCardText>
+                        <MDBTypography className="fw-bold">
+                          {twitterTitle}
+                        </MDBTypography>
+                        {twitterDescription.replace(/<[^>]+>/g, '')}
+                      </MDBCardText>
+                    </MDBTypography>
+                  </div>
+                )}
               </MDBCardBody>
             </MDBCard>
           );
         })}
-      {metaData.length > 0 && (
+      {metaData && metaData.length > 0 && (
         <MDBBtn color="primary" onClick={handleLoadMore} className="mb-2">
           Load More
         </MDBBtn>

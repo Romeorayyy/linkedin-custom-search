@@ -1,4 +1,3 @@
-// /Users/randyyono/Desktop/google-search-app/src/components/ProfileCard.js
 import React, { useState } from 'react';
 import { useSearch } from '../context/SearchContext';
 import {
@@ -45,12 +44,14 @@ const ProfileCard = () => {
     <MDBRow className="row-cols-1 row-cols-md-3 g-4">
       {metaData &&
         metaData.map((metatags, index) => {
+          if (!metatags) return null;
+
           const email = getEmailFromUrl(metatags['og:url']);
-          const description = metatags['twitter:description'].replace(
-            /<[^>]+>/g,
-            ''
-          );
-          return metatags ? (
+          const description = metatags['twitter:description']
+            ? metatags['twitter:description'].replace(/<[^>]+>/g, '')
+            : '';
+
+          return (
             <MDBCol key={metatags['og:url']}>
               <MDBCard>
                 <MDBCheckbox
@@ -99,7 +100,7 @@ const ProfileCard = () => {
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
-          ) : null;
+          );
         })}
     </MDBRow>
   );
