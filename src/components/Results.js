@@ -24,15 +24,9 @@ const Results = () => {
               <p className="result-url">{metatags['og:url']}</p>
               {metatags['twitter:card'] &&
                 metatags['twitter:title'] &&
-                metatags['twitter:description'] &&
-                metatags['twitter:image'] && (
+                metatags['twitter:description'] && (
                   <div className="metatags">
                     <div className="twitter-card">
-                      <img
-                        style={{ width: '300px' }}
-                        src={metatags['twitter:image']}
-                        alt={metatags['twitter:title']}
-                      />
                       <h4>{metatags['twitter:title']}</h4>
                       <p>
                         {metatags['twitter:description'].replace(
