@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
 import { useSearch } from '../context/SearchContext';
+import {
+  MDBCard,
+  MDBCardImage,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBRow,
+  MDBCol,
+} from 'mdb-react-ui-kit';
 
 const ProfileCard = () => {
   const { metaData, emailsData } = useSearch();
@@ -20,18 +29,11 @@ const ProfileCard = () => {
 
   const truncateDescription = (desc) => {
     const words = desc.split(' ');
-    return words.length > 30 ? words.slice(0, 30).join(' ') + '...' : desc;
+    return words.length > 15 ? words.slice(0, 15).join(' ') + '...' : desc;
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-between',
-        height: '500px',
-      }}
-    >
+    <MDBRow className="row-cols-1 row-cols-md-3 g-4">
       {metaData &&
         metaData.map((metatags, index) => {
           const email = getEmailFromUrl(metatags['og:url']);
@@ -40,33 +42,33 @@ const ProfileCard = () => {
             ''
           );
           return metatags ? (
-            <div
-              className="profile-card"
-              key={metatags['og:url']}
-              style={{ margin: '10px', width: '300px' }}
-            >
-              <img
-                style={{ width: '100%' }}
-                src={metatags['twitter:image']}
-                alt={metatags['twitter:title']}
-              />
-              <h4>{metatags['twitter:title']}</h4>
-              {email && <p>Email: {email}</p>}
-              <p>
-                {expanded[metatags['og:url']]
-                  ? description
-                  : truncateDescription(description)}
-                <span
-                  style={{ color: 'blue', cursor: 'pointer' }}
-                  onClick={() => toggleExpand(metatags['og:url'])}
-                >
-                  {expanded[metatags['og:url']] ? ' See less' : ' See more'}
-                </span>
-              </p>
-            </div>
+            <MDBCol>
+              <MDBCard>
+                <MDBCardImage
+                  src={metatags['twitter:image']}
+                  alt={metatags['twitter:title']}
+                  position="top"
+                />
+                <MDBCardBody>
+                  <MDBCardTitle>{metatags['twitter:title']}</MDBCardTitle>
+                  {email && <p>Email: {email}</p>}
+                  <MDBCardText>
+                    {expanded[metatags['og:url']]
+                      ? description
+                      : truncateDescription(description)}
+                    <span
+                      style={{ color: 'blue', cursor: 'pointer' }}
+                      onClick={() => toggleExpand(metatags['og:url'])}
+                    >
+                      {expanded[metatags['og:url']] ? ' See less' : ' See more'}
+                    </span>
+                  </MDBCardText>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBCol>
           ) : null;
         })}
-    </div>
+    </MDBRow>
   );
 };
 
