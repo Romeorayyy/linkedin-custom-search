@@ -3,6 +3,7 @@ import { useSearch } from '../context/SearchContext';
 import * as XLSX from 'xlsx';
 import exportFromJSON from 'export-from-json';
 import { saveAs } from 'file-saver';
+import { MDBBtn } from 'mdb-react-ui-kit';
 
 const ExportData = () => {
   const { metaData, emailsData, selectedProfiles } = useSearch();
@@ -50,28 +51,36 @@ const ExportData = () => {
   };
 
   return (
-    <div>
-      <label>
-        <input
-          type="radio"
-          value="csv"
-          checked={exportType === 'csv'}
-          onChange={(e) => setExportType(e.target.value)}
-        />
-        CSV
-      </label>
-      <label>
-        <input
-          type="radio"
-          value="xlsx"
-          checked={exportType === 'xlsx'}
-          onChange={(e) => setExportType(e.target.value)}
-        />
-        Excel
-      </label>
-      <button onClick={handleExport} disabled={selectedProfiles.length === 0}>
+    <div className={selectedProfiles.length === 0 ? 'd-none' : 'd-flex m-3'}>
+      <div className="p-2">
+        <label>
+          <input
+            type="radio"
+            value="csv"
+            checked={exportType === 'csv'}
+            onChange={(e) => setExportType(e.target.value)}
+          />
+          CSV
+        </label>
+      </div>
+      <div className="p-2">
+        <label>
+          <input
+            type="radio"
+            value="xlsx"
+            checked={exportType === 'xlsx'}
+            onChange={(e) => setExportType(e.target.value)}
+          />
+          Excel
+        </label>
+      </div>
+      <MDBBtn
+        color="info"
+        onClick={handleExport}
+        disabled={selectedProfiles.length === 0}
+      >
         Export data
-      </button>
+      </MDBBtn>
     </div>
   );
 };
