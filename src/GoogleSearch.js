@@ -3,6 +3,7 @@ import Results from './components/Results';
 import ProfileCard from './components/ProfileCard';
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import SearchForms from './components/SearchForms';
+import DataTable from './components/DataTable';
 
 const GoogleSearch = () => {
   return (
@@ -16,6 +17,7 @@ const GoogleSearch = () => {
           </MDBCol>
         </MDBCol>
         <MDBCol size="12" lg="6" className="p-5">
+          <DataTable />
           <ProfileCard />
         </MDBCol>
       </MDBRow>
