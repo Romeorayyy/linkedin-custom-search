@@ -1,6 +1,6 @@
+// /Users/randyyono/Desktop/google-search-app/src/components/ProfileCard.js
 import React, { useState } from 'react';
 import { useSearch } from '../context/SearchContext';
-import DataTable from './DataTable';
 import {
   MDBCard,
   MDBCardImage,
@@ -16,19 +16,9 @@ import {
 } from 'mdb-react-ui-kit';
 
 const ProfileCard = () => {
-  const { metaData, emailsData } = useSearch();
+  const { metaData, emailsData, selectedProfiles, toggleSelectedProfile } =
+    useSearch();
   const [expanded, setExpanded] = useState({});
-  const [selectedProfiles, setSelectedProfiles] = useState([]);
-
-  const toggleSelectedProfile = (url) => {
-    if (selectedProfiles.includes(url)) {
-      setSelectedProfiles(
-        selectedProfiles.filter((profileUrl) => profileUrl !== url)
-      );
-    } else {
-      setSelectedProfiles([...selectedProfiles, url]);
-    }
-  };
 
   const getEmailFromUrl = (url) => {
     const emailData = emailsData.find((item) => item.ogUrl === url);
@@ -51,7 +41,6 @@ const ProfileCard = () => {
 
   return (
     <MDBRow className="row-cols-1 row-cols-md-3 g-4">
-      <DataTable selectedProfiles={selectedProfiles} />
       {metaData &&
         metaData.map((metatags, index) => {
           const email = getEmailFromUrl(metatags['og:url']);
@@ -60,7 +49,7 @@ const ProfileCard = () => {
             ''
           );
           return metatags ? (
-            <MDBCol>
+            <MDBCol key={metatags['og:url']}>
               <MDBCard>
                 <MDBCheckbox
                   id={`checkbox${index}`}

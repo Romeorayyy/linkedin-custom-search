@@ -1,9 +1,11 @@
+///Users/randyyono/Desktop/google-search-app/src/components/DataTable.js
+
 import React, { useState } from 'react';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import { useSearch } from '../context/SearchContext';
 
-const DataTable = ({ selectedProfiles }) => {
-  const { metaData, emailsData } = useSearch();
+const DataTable = () => {
+  const { metaData, emailsData, selectedProfiles } = useSearch();
   const [expanded, setExpanded] = useState({});
 
   const getEmailFromUrl = (url) => {

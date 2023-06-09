@@ -24,6 +24,7 @@ export const SearchProvider = ({ children }) => {
   const [metaData, setMetaData] = useState([]); // New state variable
   const [dataGetter, setDataGetter] = useState([]);
   const [emailsData, setEmailsData] = useState([]);
+  const [selectedProfiles, setSelectedProfiles] = useState([]);
 
   const handleSearch = async (searchQuery, page, appendResults = false) => {
     try {
@@ -168,8 +169,21 @@ export const SearchProvider = ({ children }) => {
   const handleEmailOptionChange = (option) => {
     setEmailOption(option);
   };
-
   // JobSearchComponent.js
+
+  // Checkbox table features
+
+  const toggleSelectedProfile = (url) => {
+    if (selectedProfiles.includes(url)) {
+      setSelectedProfiles(
+        selectedProfiles.filter((profileUrl) => profileUrl !== url)
+      );
+    } else {
+      setSelectedProfiles([...selectedProfiles, url]);
+    }
+  };
+
+  // Checkbox table features
 
   const value = {
     googleSearchResults,
@@ -181,6 +195,8 @@ export const SearchProvider = ({ children }) => {
     allData,
     metaData,
     emailsData,
+    selectedProfiles,
+    toggleSelectedProfile,
     handleLoadMore,
     handleEmailOptionChange,
     handleSetJobTitle,
