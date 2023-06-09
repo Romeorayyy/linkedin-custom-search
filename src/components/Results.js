@@ -1,6 +1,12 @@
-// /Users/randyyono/Desktop/google-search-app/src/components/Results.js
-
 import React from 'react';
+import {
+  MDBCard,
+  MDBCardBody,
+  MDBCardText,
+  MDBCardTitle,
+  MDBTypography,
+  MDBBtn,
+} from 'mdb-react-ui-kit';
 import { useSearch } from '../context/SearchContext';
 
 const Results = () => {
@@ -11,39 +17,46 @@ const Results = () => {
       {metaData &&
         metaData.map((metatags) => {
           return (
-            <div className="search-result" key={metatags['og:url']}>
-              <h3 className="result-title">
-                <a
-                  href={metatags['og:url']}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {metatags['og:title']}
-                </a>
-              </h3>
-              <p className="result-url">{metatags['og:url']}</p>
-              {metatags['twitter:card'] &&
-                metatags['twitter:title'] &&
-                metatags['twitter:description'] && (
-                  <div className="metatags">
-                    <div className="twitter-card">
-                      <h4>{metatags['twitter:title']}</h4>
-                      <p>
-                        {metatags['twitter:description'].replace(
-                          /<[^>]+>/g,
-                          ''
-                        )}
-                      </p>
+            <MDBCard className="mb-3" key={metatags['og:url']}>
+              <MDBCardBody>
+                <MDBCardTitle className="fs-5 fw-bold text-primary">
+                  <a
+                    href={metatags['og:url']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary"
+                  >
+                    {metatags['og:title']}
+                  </a>
+                </MDBCardTitle>
+                <MDBTypography className="text-success mb-2" variant="muted">
+                  {metatags['og:url']}
+                </MDBTypography>
+                {metatags['twitter:card'] &&
+                  metatags['twitter:title'] &&
+                  metatags['twitter:description'] && (
+                    <div className="fw-bold">
+                      <MDBTypography className="fw-bold" variant="muted">
+                        <MDBCardText>
+                          <MDBTypography className="fw-bold">
+                            {metatags['twitter:title']}
+                          </MDBTypography>
+                          {metatags['twitter:description'].replace(
+                            /<[^>]+>/g,
+                            ''
+                          )}
+                        </MDBCardText>
+                      </MDBTypography>
                     </div>
-                  </div>
-                )}
-            </div>
+                  )}
+              </MDBCardBody>
+            </MDBCard>
           );
         })}
       {metaData.length > 0 && (
-        <button onClick={handleLoadMore} className="load-more-button">
+        <MDBBtn color="primary" onClick={handleLoadMore} className="mb-2">
           Load More
-        </button>
+        </MDBBtn>
       )}
     </div>
   );

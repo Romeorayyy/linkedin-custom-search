@@ -80,7 +80,11 @@ const ProfileCard = () => {
                   </MDBCardText>
                 </MDBCardBody>
                 <MDBCardBody>
-                  <MDBCardLink href={metatags['og:url']}>
+                  <MDBCardLink
+                    href={metatags['og:url']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     Open Linkedin Profile
                   </MDBCardLink>
                 </MDBCardBody>
