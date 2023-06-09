@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSearch } from '../context/SearchContext';
+import DataTable from './DataTable';
 import {
   MDBCard,
   MDBCardImage,
@@ -8,6 +9,7 @@ import {
   MDBCardText,
   MDBListGroupItem,
   MDBCardLink,
+  MDBCheckbox,
   MDBRow,
   MDBCol,
   MDBListGroup,
@@ -15,8 +17,18 @@ import {
 
 const ProfileCard = () => {
   const { metaData, emailsData } = useSearch();
-
   const [expanded, setExpanded] = useState({});
+  const [selectedProfiles, setSelectedProfiles] = useState([]);
+
+  const toggleSelectedProfile = (url) => {
+    if (selectedProfiles.includes(url)) {
+      setSelectedProfiles(
+        selectedProfiles.filter((profileUrl) => profileUrl !== url)
+      );
+    } else {
+      setSelectedProfiles([...selectedProfiles, url]);
+    }
+  };
 
   const getEmailFromUrl = (url) => {
     const emailData = emailsData.find((item) => item.ogUrl === url);
@@ -39,6 +51,7 @@ const ProfileCard = () => {
 
   return (
     <MDBRow className="row-cols-1 row-cols-md-3 g-4">
+      <DataTable selectedProfiles={selectedProfiles} />
       {metaData &&
         metaData.map((metatags, index) => {
           const email = getEmailFromUrl(metatags['og:url']);
@@ -49,6 +62,11 @@ const ProfileCard = () => {
           return metatags ? (
             <MDBCol>
               <MDBCard>
+                <MDBCheckbox
+                  id={`checkbox${index}`}
+                  checked={selectedProfiles.includes(metatags['og:url'])}
+                  onChange={() => toggleSelectedProfile(metatags['og:url'])}
+                />
                 <MDBCardImage
                   src={metatags['twitter:image']}
                   alt={metatags['twitter:title']}
