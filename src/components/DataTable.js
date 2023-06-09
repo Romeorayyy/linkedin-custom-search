@@ -25,6 +25,8 @@ const DataTable = () => {
     return words.length > 8 ? words.slice(0, 8).join(' ') + '...' : desc;
   };
 
+  console.log(selectedProfiles);
+
   return (
     selectedProfiles?.length > 0 && (
       <MDBTable align="middle">
@@ -33,7 +35,7 @@ const DataTable = () => {
             <th scope="col">First Name</th>
             <th scope="col">Last Name</th>
             <th scope="col">Email</th>
-            <th scope="col">Title</th>
+            <th scope="col">Linkedin Title</th>
             <th scope="col">Description</th>
             <th scope="col">URL</th>
           </tr>

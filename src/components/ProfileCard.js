@@ -25,6 +25,8 @@ const ProfileCard = () => {
     return emailData ? emailData.email : null;
   };
 
+  console.log(selectedProfiles);
+
   const toggleExpand = (url) => {
     setExpanded((prev) => ({
       ...prev,
