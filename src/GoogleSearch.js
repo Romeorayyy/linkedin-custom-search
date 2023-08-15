@@ -1,4 +1,5 @@
 import React from 'react';
+
 import Results from './components/Results';
 import ProfileCard from './components/ProfileCard';
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
@@ -7,16 +8,15 @@ import DataTable from './components/DataTable';
 
 const GoogleSearch = () => {
   return (
-    <MDBContainer fluid className="p-5">
+    <MDBContainer fluid>
       <MDBRow className="justify-content-center">
-        <MDBCol size="12" lg="6" className="px-5">
+        <MDBCol xs={12} md={8} lg={6}>
           <h1 className="search-header">Custom Google Search</h1>
           <SearchForms />
-          <MDBCol size="12" className="p-5">
-            <Results />
-          </MDBCol>
+          <Results />
         </MDBCol>
-        <MDBCol size="12" lg="6" className="p-5">
+
+        <MDBCol xs={12} md={8} lg={6}>
           <DataTable />
           <ProfileCard />
         </MDBCol>

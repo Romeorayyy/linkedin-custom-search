@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearch } from '../context/SearchContext';
 import {
   MDBCard,
@@ -18,13 +18,24 @@ const ProfileCard = () => {
   const { metaData, emailsData, selectedProfiles, toggleSelectedProfile } =
     useSearch();
   const [expanded, setExpanded] = useState({});
+  const [windowSize, setWindowSize] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   const getEmailFromUrl = (url) => {
     const emailData = emailsData.find((item) => item.ogUrl === url);
     return emailData ? emailData.email : null;
   };
-
-  console.log(selectedProfiles);
 
   const toggleExpand = (url) => {
     setExpanded((prev) => ({
@@ -38,10 +49,17 @@ const ProfileCard = () => {
     return words.length > 15 ? words.slice(0, 15).join(' ') + '...' : desc;
   };
 
-  console.log(metaData);
+  let rowClass = 'row-cols-1';
+  if (windowSize <= 756) {
+    rowClass = 'row-cols-1 row-cols-sm-1';
+  } else if (windowSize <= 1500) {
+    rowClass = 'row-cols-1 row-cols-md-2';
+  } else {
+    rowClass = 'row-cols-1 row-cols-lg-3';
+  }
 
   return (
-    <MDBRow className="row-cols-1 row-cols-md-3 g-4">
+    <MDBRow className={rowClass}>
       {metaData &&
         metaData.map((metatags, index) => {
           if (!metatags) return null;
