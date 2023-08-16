@@ -139,10 +139,20 @@ export const SearchProvider = ({ children }) => {
     handleSearch(searchQuery, 1, false);
   };
 
-  const handleLoadMore = async () => {
-    const nextPage = currentPage + 10; // calculate the next page value
-    setCurrentPage(nextPage); // update the current page
-    await handleSearch(jobSearchQuery || searchQuery, nextPage, true); // Add true to append results
+  const handleLoadMore = () => {
+    if (allData.queries && allData.queries.nextPage) {
+      const nextPageNumber = allData.queries.nextPage[0].startIndex;
+
+      // Before making the call, we can verify if there are more results
+      if (nextPageNumber >= allData.searchInformation.totalResults) {
+        alert('No more results.');
+        return;
+      }
+
+      handleSearch(searchQuery, nextPageNumber, true);
+    } else {
+      alert('No more results.');
+    }
   };
 
   // JobSearchComponent.js
@@ -225,6 +235,9 @@ export const SearchProvider = ({ children }) => {
     metaData,
     emailsData,
     selectedProfiles,
+    currentPage,
+    jobSearchQuery,
+    setCurrentPage,
     toggleSelectedProfile,
     setJobSearchQuery,
     handleLoadMore,
