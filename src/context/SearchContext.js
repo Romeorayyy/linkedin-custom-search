@@ -44,24 +44,32 @@ export const SearchProvider = ({ children }) => {
         }
       );
 
-      if (appendResults) {
-        // Append results to the existing ones if appendResults is true
-        setGoogleSearchResults([
-          ...googleSearchResults,
-          ...response.data.items,
-        ]);
-      } else {
-        // Replace the existing results if appendResults is false
-        setGoogleSearchResults(response.data.items);
-      }
+      if (response.data && response.data.items) {
+        if (appendResults) {
+          // Append results to the existing ones if appendResults is true
+          setGoogleSearchResults([
+            ...googleSearchResults,
+            ...response.data.items,
+          ]);
+        } else {
+          // Replace the existing results if appendResults is false
+          setGoogleSearchResults(response.data.items);
+        }
 
-      console.log(response.data.items);
-      setAllData(response.data);
+        console.log(response.data.items);
+        setAllData(response.data);
+      } else {
+        // Handle case where no results are found
+        setGoogleSearchResults([]); // Empty the search results
+        setAllData({}); // Empty all data
+        setError('Sorry, no matches found.'); // Set an appropriate error message
+      }
     } catch (error) {
       console.error(error);
       setError(error.message); // set the error message
     }
   };
+
   console.log(allData);
   useEffect(() => {
     const newMetaData = googleSearchResults.map(
