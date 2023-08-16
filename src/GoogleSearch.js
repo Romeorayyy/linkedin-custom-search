@@ -1,18 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ProfileCard from './components/ProfileCard';
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBBtn,
-  MDBModal,
-  MDBModalDialog,
-  MDBModalContent,
-  MDBModalHeader,
-  MDBModalBody,
-  MDBModalFooter,
-} from 'mdb-react-ui-kit';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdb-react-ui-kit';
 import SearchForms from './components/SearchForms';
+import DataTableModal from './components/DataTableModal';
 import DataTable from './components/DataTable';
 import { useSearch } from './context/SearchContext';
 
@@ -73,27 +63,10 @@ const GoogleSearch = () => {
         </MDBBtn>
       )}
 
-      <MDBModal
-        show={showTableModal}
-        getOpenState={(e) => setShowTableModal(e)}
-      >
-        <MDBModalDialog centered size="lg">
-          <MDBModalContent>
-            <MDBModalHeader>
-              <h5>Data Table</h5>
-              <MDBBtn className="btn-close" onClick={toggleModal}></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
-              <DataTable />
-            </MDBModalBody>
-            <MDBModalFooter>
-              <MDBBtn color="secondary" onClick={toggleModal}>
-                Close
-              </MDBBtn>
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+      <DataTableModal
+        showTableModal={showTableModal}
+        toggleModal={toggleModal}
+      />
     </MDBContainer>
   );
 };
