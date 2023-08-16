@@ -1,14 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import ProfileCard from './components/ProfileCard';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdb-react-ui-kit';
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBBtn,
+  MDBModal,
+  MDBModalDialog,
+  MDBModalContent,
+  MDBModalHeader,
+  MDBModalBody,
+  MDBModalFooter,
+} from 'mdb-react-ui-kit';
 import SearchForms from './components/SearchForms';
 import DataTable from './components/DataTable';
 import { useSearch } from './context/SearchContext';
 
 const GoogleSearch = () => {
-  const { handleLoadMore, metaData } = useSearch();
+  const { handleLoadMore, metaData, selectedProfiles } = useSearch();
 
   const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
+  const [showTableModal, setShowTableModal] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -22,48 +34,68 @@ const GoogleSearch = () => {
     };
   }, []);
 
-  if (!isLargeScreen) {
-    return (
-      <MDBContainer fluid>
-        <MDBRow className="justify-content-center">
-          <MDBCol xs={12} md={12} lg={12}>
-            <h1 className="search-header">Custom Linkendin Search</h1>
-            <SearchForms />
-            <ProfileCard />
-            {metaData && metaData.length > 0 && (
-              <MDBBtn color="primary" onClick={handleLoadMore} className="mb-2">
-                Load More
-              </MDBBtn>
-            )}
+  const toggleModal = () => {
+    setShowTableModal(!showTableModal);
+  };
 
-            <DataTable />
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    );
-  } else {
-    return (
-      <MDBContainer fluid>
-        <MDBRow className="justify-content-center">
-          <MDBCol xs={12} md={12} lg={12}>
-            <h1 className="search-header">Custom Linkendin Search</h1>
-            <SearchForms />
-            <ProfileCard />
-            {metaData && metaData.length > 0 && (
-              <MDBBtn
-                color="primary"
-                onClick={handleLoadMore}
-                className="mb-2 mt-4"
-              >
-                Load More
+  return (
+    <MDBContainer fluid>
+      <MDBRow className="justify-content-center">
+        <MDBCol xs={12} md={12} lg={12}>
+          <h1 className="search-header">Custom Linkendin Search</h1>
+          <SearchForms />
+          <ProfileCard />
+          {metaData && metaData.length > 0 && (
+            <MDBBtn
+              color="primary"
+              onClick={handleLoadMore}
+              className="mb-2 mt-4"
+            >
+              Load More
+            </MDBBtn>
+          )}
+        </MDBCol>
+      </MDBRow>
+
+      {/* Positioned "View Table" button */}
+      {selectedProfiles.length > 0 && (
+        <MDBBtn
+          color="primary"
+          onClick={toggleModal}
+          style={{
+            position: 'fixed',
+            bottom: '20px',
+            right: '20px',
+            zIndex: 999,
+          }}
+        >
+          View Table
+        </MDBBtn>
+      )}
+
+      <MDBModal
+        show={showTableModal}
+        getOpenState={(e) => setShowTableModal(e)}
+      >
+        <MDBModalDialog centered size="lg">
+          <MDBModalContent>
+            <MDBModalHeader>
+              <h5>Data Table</h5>
+              <MDBBtn className="btn-close" onClick={toggleModal}></MDBBtn>
+            </MDBModalHeader>
+            <MDBModalBody>
+              <DataTable />
+            </MDBModalBody>
+            <MDBModalFooter>
+              <MDBBtn color="secondary" onClick={toggleModal}>
+                Close
               </MDBBtn>
-            )}
-          </MDBCol>
-          <DataTable />
-        </MDBRow>
-      </MDBContainer>
-    );
-  }
+            </MDBModalFooter>
+          </MDBModalContent>
+        </MDBModalDialog>
+      </MDBModal>
+    </MDBContainer>
+  );
 };
 
 export default GoogleSearch;
