@@ -26,11 +26,13 @@ const GoogleSearch = () => {
             <div className="mt-5">
               <ol>
                 <li>
-                  Select the users you want by checking the box next to their
-                  profile card.
+                  Select the users you want by{' '}
+                  <span style={{ color: '#50ABC8' }}>checking the box</span>{' '}
+                  next to their profile card.
                 </li>
                 <li>
-                  Once you've selected the desired users, click the "View Table"
+                  Once you've selected the desired users, click the{' '}
+                  <span style={{ color: '#50ABC8' }}>"View Table"</span>
                   button to export only those users
                 </li>
               </ol>

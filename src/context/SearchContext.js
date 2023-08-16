@@ -55,8 +55,7 @@ export const SearchProvider = ({ children }) => {
           // Replace the existing results if appendResults is false
           setGoogleSearchResults(response.data.items);
         }
-
-        console.log(response.data.items);
+        // console.log(response.data.items);
         setAllData(response.data);
       } else {
         // Handle case where no results are found
@@ -69,8 +68,8 @@ export const SearchProvider = ({ children }) => {
       setError(error.message); // set the error message
     }
   };
+  //console.log(allData);
 
-  console.log(allData);
   useEffect(() => {
     const newMetaData = googleSearchResults.map(
       (result) => result.pagemap?.metatags?.[0]

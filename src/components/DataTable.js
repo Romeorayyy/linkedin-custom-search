@@ -25,7 +25,7 @@ const DataTable = () => {
     return words.length > 8 ? words.slice(0, 8).join(' ') + '...' : desc;
   };
 
-  console.log(selectedProfiles);
+  // console.log(selectedProfiles);
 
   return (
     selectedProfiles?.length > 0 && (
