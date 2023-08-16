@@ -52,10 +52,14 @@ const ProfileCard = () => {
   let rowClass = 'row-cols-1';
   if (windowSize <= 756) {
     rowClass = 'row-cols-1 row-cols-sm-1';
-  } else if (windowSize <= 1500) {
+  } else if (windowSize <= 1000) {
     rowClass = 'row-cols-1 row-cols-md-2';
+  } else if (windowSize <= 1200) {
+    rowClass = 'row-cols-1 row-cols-md-3';
+  } else if (windowSize <= 1500) {
+    rowClass = 'row-cols-1 row-cols-md-4';
   } else {
-    rowClass = 'row-cols-1 row-cols-lg-3';
+    rowClass = 'row-cols-1 row-cols-lg-5';
   }
 
   return (
@@ -71,7 +75,7 @@ const ProfileCard = () => {
 
           return (
             <MDBCol key={metatags['og:url']}>
-              <MDBCard>
+              <MDBCard className="p-2 mt-5">
                 <MDBCheckbox
                   id={`checkbox${index}`}
                   checked={selectedProfiles.includes(metatags['og:url'])}

@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Results from './components/Results';
 import ProfileCard from './components/ProfileCard';
-import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdb-react-ui-kit';
 import SearchForms from './components/SearchForms';
 import DataTable from './components/DataTable';
+import { useSearch } from './context/SearchContext';
 
 const GoogleSearch = () => {
-  const [isMediumScreen, setIsMediumScreen] = useState(
-    window.innerWidth >= 768 && window.innerWidth < 992
-  );
+  const { handleLoadMore, metaData } = useSearch();
+
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMediumScreen(window.innerWidth >= 768 && window.innerWidth < 992);
+      setIsLargeScreen(window.innerWidth >= 992);
     };
 
     window.addEventListener('resize', handleResize);
@@ -22,16 +22,22 @@ const GoogleSearch = () => {
     };
   }, []);
 
-  if (isMediumScreen) {
+  if (!isLargeScreen) {
     return (
       <MDBContainer fluid>
         <MDBRow className="justify-content-center">
-          <MDBCol xs={12} md={8} lg={6}>
+          <MDBCol xs={12} md={12} lg={12}>
             <h1 className="search-header">Custom Linkendin Search</h1>
             <SearchForms />
-            <DataTable />
             <ProfileCard />
-            <Results />
+
+            {metaData && metaData.length > 0 && (
+              <MDBBtn color="primary" onClick={handleLoadMore} className="mb-2">
+                Load More
+              </MDBBtn>
+            )}
+
+            <DataTable />
           </MDBCol>
         </MDBRow>
       </MDBContainer>
@@ -40,15 +46,22 @@ const GoogleSearch = () => {
     return (
       <MDBContainer fluid>
         <MDBRow className="justify-content-center">
-          <MDBCol xs={12} md={8} lg={6}>
+          <MDBCol xs={12} md={12} lg={12}>
             <h1 className="search-header">Custom Linkendin Search</h1>
             <SearchForms />
-            <Results />
-          </MDBCol>
-          <MDBCol xs={12} md={8} lg={6}>
-            <DataTable />
             <ProfileCard />
+
+            {metaData && metaData.length > 0 && (
+              <MDBBtn
+                color="primary"
+                onClick={handleLoadMore}
+                className="mb-2 mt-4"
+              >
+                Load More
+              </MDBBtn>
+            )}
           </MDBCol>
+          <DataTable />
         </MDBRow>
       </MDBContainer>
     );
