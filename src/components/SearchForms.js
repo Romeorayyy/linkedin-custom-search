@@ -19,7 +19,7 @@ const SearchForms = () => {
         {/* Job search form */}
         <form onSubmit={handleSpecificSearchSubmit}>
           <MDBRow className="gx-3">
-            <MDBCol size="7">
+            <MDBCol size="12">
               <MDBInput
                 type="text"
                 id="jobTitle"
@@ -28,9 +28,10 @@ const SearchForms = () => {
                 onChange={handleSetJobTitle}
                 size="lg"
                 required
+                placeholder="Enter job title"
               />
             </MDBCol>
-            <MDBCol size="7" className="gy-4">
+            <MDBCol size="12" className="gy-3">
               <MDBInput
                 type="text"
                 id="locationKeywords"
@@ -39,6 +40,7 @@ const SearchForms = () => {
                 onChange={handleSetLocationKeyword}
                 size="lg"
                 required
+                placeholder="Enter location or keywords"
               />
             </MDBCol>
             <MDBCol size="12" className="gy-3">
@@ -52,7 +54,7 @@ const SearchForms = () => {
       <MDBCol start size="12" className="gy-4">
         <form onSubmit={handleSearchSubmit}>
           <MDBRow className="gx-3">
-            <MDBCol>
+            <MDBCol size={10}>
               <MDBInput
                 type="text"
                 id="form1"
@@ -63,7 +65,7 @@ const SearchForms = () => {
                 required
               />
             </MDBCol>
-            <MDBCol className="align-self-center">
+            <MDBCol className="align-self-center" size={2}>
               <MDBBtn color="dark" type="submit" size="lg">
                 Search
               </MDBBtn>
