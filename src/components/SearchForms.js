@@ -12,7 +12,10 @@ const SearchForms = () => {
     handleSearchSubmit,
     searchQuery,
     handleSearchQuery,
+    emailOption,
+    handleEmailOptionChange,
   } = useSearch();
+
   return (
     <MDBRow start className="px-5">
       <MDBCol start size="12" className="gy-4">
@@ -43,6 +46,44 @@ const SearchForms = () => {
                 placeholder="Enter location or keywords"
               />
             </MDBCol>
+
+            {/* Email options */}
+            <MDBRow>
+              <MDBCol>
+                <label>
+                  <input
+                    type="radio"
+                    value="@gmail.com"
+                    checked={emailOption === '@gmail.com'}
+                    onChange={(e) => handleEmailOptionChange(e.target.value)}
+                  />
+                  Gmail
+                </label>
+              </MDBCol>
+              <MDBCol>
+                <label>
+                  <input
+                    type="radio"
+                    value="@outlook.com"
+                    checked={emailOption === '@outlook.com'}
+                    onChange={(e) => handleEmailOptionChange(e.target.value)}
+                  />
+                  Outlook
+                </label>
+              </MDBCol>
+              <MDBCol>
+                <label>
+                  <input
+                    type="radio"
+                    value="@yahoo.com"
+                    checked={emailOption === '@yahoo.com'}
+                    onChange={(e) => handleEmailOptionChange(e.target.value)}
+                  />
+                  Yahoo
+                </label>
+              </MDBCol>
+            </MDBRow>
+
             <MDBCol size="12" className="gy-3">
               <MDBBtn color="info" type="submit">
                 Generate Custom Search
@@ -51,6 +92,7 @@ const SearchForms = () => {
           </MDBRow>
         </form>
       </MDBCol>
+
       <MDBCol start size="12" className="gy-4">
         <form onSubmit={handleSearchSubmit}>
           <MDBRow className="gx-3">
