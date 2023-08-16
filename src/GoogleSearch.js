@@ -16,7 +16,7 @@ const GoogleSearch = () => {
   };
 
   return (
-    <MDBContainer fluid>
+    <MDBContainer className="mt-5" fluid>
       <MDBRow className="justify-content-center">
         <MDBCol xs={12} md={12} lg={12}>
           <h1 className="search-header">Custom LinkedIn Search</h1>
