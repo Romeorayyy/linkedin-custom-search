@@ -27,7 +27,7 @@ const GoogleSearch = () => {
       <MDBContainer fluid>
         <MDBRow className="justify-content-center">
           <MDBCol xs={12} md={8} lg={6}>
-            <h1 className="search-header">Custom Google Search</h1>
+            <h1 className="search-header">Custom Linkendin Search</h1>
             <SearchForms />
             <DataTable />
             <ProfileCard />
@@ -41,7 +41,7 @@ const GoogleSearch = () => {
       <MDBContainer fluid>
         <MDBRow className="justify-content-center">
           <MDBCol xs={12} md={8} lg={6}>
-            <h1 className="search-header">Custom Google Search</h1>
+            <h1 className="search-header">Custom Linkendin Search</h1>
             <SearchForms />
             <Results />
           </MDBCol>
