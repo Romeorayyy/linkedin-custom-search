@@ -30,7 +30,6 @@ const GoogleSearch = () => {
             <h1 className="search-header">Custom Linkendin Search</h1>
             <SearchForms />
             <ProfileCard />
-
             {metaData && metaData.length > 0 && (
               <MDBBtn color="primary" onClick={handleLoadMore} className="mb-2">
                 Load More
@@ -50,7 +49,6 @@ const GoogleSearch = () => {
             <h1 className="search-header">Custom Linkendin Search</h1>
             <SearchForms />
             <ProfileCard />
-
             {metaData && metaData.length > 0 && (
               <MDBBtn
                 color="primary"
