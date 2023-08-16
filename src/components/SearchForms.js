@@ -46,46 +46,54 @@ const SearchForms = () => {
                 placeholder="Enter location or keywords"
               />
             </MDBCol>
-
             {/* Email options */}
             <MDBRow className="gy-2">
+              <h5>Pick an email type:</h5>
               <MDBCol>
-                <label>
-                  <input
-                    type="radio"
-                    value="@gmail.com"
-                    checked={emailOption === '@gmail.com'}
-                    onChange={(e) => handleEmailOptionChange(e.target.value)}
-                  />
-                  Gmail
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="@outlook.com"
-                    checked={emailOption === '@outlook.com'}
-                    onChange={(e) => handleEmailOptionChange(e.target.value)}
-                  />
-                  Outlook
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="@yahoo.com"
-                    checked={emailOption === '@yahoo.com'}
-                    onChange={(e) => handleEmailOptionChange(e.target.value)}
-                  />
-                  Yahoo
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    value="custom"
-                    checked={emailOption === 'custom'}
-                    onChange={(e) => handleEmailOptionChange(e.target.value)}
-                  />
-                  Custom:
-                </label>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      value="@gmail.com"
+                      checked={emailOption === '@gmail.com'}
+                      onChange={(e) => handleEmailOptionChange(e.target.value)}
+                    />
+                    Gmail
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      value="@outlook.com"
+                      checked={emailOption === '@outlook.com'}
+                      onChange={(e) => handleEmailOptionChange(e.target.value)}
+                    />
+                    Outlook
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      value="@yahoo.com"
+                      checked={emailOption === '@yahoo.com'}
+                      onChange={(e) => handleEmailOptionChange(e.target.value)}
+                    />
+                    Yahoo
+                  </label>
+                </div>
+                <div>
+                  <label>
+                    <input
+                      type="radio"
+                      value="custom"
+                      checked={emailOption === 'custom'}
+                      onChange={(e) => handleEmailOptionChange(e.target.value)}
+                    />
+                    Custom:
+                  </label>
+                </div>
                 {emailOption === 'custom' && (
                   <MDBInput
                     type="text"
