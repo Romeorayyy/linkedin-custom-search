@@ -23,7 +23,19 @@ const GoogleSearch = () => {
           <SearchForms />
 
           {googleSearchResults && googleSearchResults.length > 0 ? (
-            <ProfileCard />
+            <div className="mt-5">
+              <ol>
+                <li>
+                  Select the users you want by checking the box next to their
+                  profile card.
+                </li>
+                <li>
+                  Once you've selected the desired users, click the "View Table"
+                  button to export only those users
+                </li>
+              </ol>
+              <ProfileCard />
+            </div>
           ) : (
             <div>Sorry, no results found..</div>
           )}
