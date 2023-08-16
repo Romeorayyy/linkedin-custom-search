@@ -6,7 +6,8 @@ import DataTableModal from './components/DataTableModal';
 import { useSearch } from './context/SearchContext';
 
 const GoogleSearch = () => {
-  const { handleLoadMore, metaData, selectedProfiles } = useSearch();
+  const { handleLoadMore, metaData, selectedProfiles, googleSearchResults } =
+    useSearch();
 
   const [showTableModal, setShowTableModal] = useState(false);
 
@@ -18,9 +19,15 @@ const GoogleSearch = () => {
     <MDBContainer fluid>
       <MDBRow className="justify-content-center">
         <MDBCol xs={12} md={12} lg={12}>
-          <h1 className="search-header">Custom Linkendin Search</h1>
+          <h1 className="search-header">Custom LinkedIn Search</h1>
           <SearchForms />
-          <ProfileCard />
+
+          {googleSearchResults && googleSearchResults.length > 0 ? (
+            <ProfileCard />
+          ) : (
+            <div>Sorry, no results found..</div>
+          )}
+
           {metaData && metaData.length > 0 && (
             <MDBBtn
               color="primary"
