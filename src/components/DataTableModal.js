@@ -20,7 +20,7 @@ const DataTableModal = ({ showTableModal, toggleModal }) => {
             <h5>Data Table</h5>
             <MDBBtn className="btn-close" onClick={toggleModal}></MDBBtn>
           </MDBModalHeader>
-          <MDBModalBody>
+          <MDBModalBody style={{ overflowX: 'auto' }}>
             <DataTable />
           </MDBModalBody>
           <MDBModalFooter>
