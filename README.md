@@ -7,8 +7,6 @@ This React project provides a custom interface for performing Google searches, d
 ### Root Level:
 
 - `package-lock.json` & `package.json`: Manage project dependencies and metadata.
-- `server/`: Contains server-related code and configurations.
-  - `server.js`: Sets up an Express server with endpoints related to Google search functionality.
 - `public/`: Holds assets served directly without processing. Key files include:
   - `index.html`: The primary HTML file where the root React component is mounted.
   - `manifest.json`: Web app manifest with metadata for PWAs.
@@ -32,27 +30,6 @@ This is the heart of the React application.
 - **App Component** : Serves as the application's main entry point, ensuring that key components have access to the search context via `SearchProvider`.
 - **GoogleSearch Component** : Acts as the central interface for search functionalities. It uses the `SearchForms` component for user inputs and displays search results through the `Results` and `DataTable` components. Detailed views of selected items might be shown via the `ProfileCard` component.
 - **SearchContext** : The heart of the search functionality. Components like `GoogleSearch`, `Results`, and `SearchForms` heavily interact with this context to fetch, display, and manage search results. It provides state variables like `searchQuery` and `googleSearchResults` and methods like `handleSearch` to perform and manage searches.
-
-### GoogleSearch.js:
-
-1. **Imports** :
-
-- **React** : Standard for any React component.
-- **MDB Components** : UI components for layout.
-- **Internal Components** : The components `Results`, `ProfileCard`, `SearchForms`, and `DataTable` are imported, indicating they are used within the `GoogleSearch` component.
-
-1. **Component Structure** :
-
-- The component uses MDB's container, row, and column structure for layout.
-- There are two main columns:
-  - The first column (`<MDBCol xs={12} md={8} lg={6}>`) has the header "Custom Google Search", followed by the `SearchForms` component (where users likely input search criteria) and the `Results` component (which probably displays the search results).
-  - The second column contains the `DataTable` (likely a structured table of search results or data) and the `ProfileCard` (which might show a detailed view of a selected result or profile).
-
-1. **Interactions** :
-
-- The `SearchForms` component is where users probably define their search parameters. Given its placement in the UI and the context we've seen, it likely utilizes the `SearchContext` to set these parameters and trigger a search.
-- The `Results` component probably consumes the search results from the `SearchContext` to display them to the user.
-- `DataTable` and `ProfileCard` likely offer different views or details of the search results, possibly utilizing the `SearchContext` for data and interactions.
 
 ### SearchForms.js:
 
