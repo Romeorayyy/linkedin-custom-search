@@ -14,6 +14,7 @@ export const SearchProvider = ({ children }) => {
   const [jobTitle, setJobTitle] = useState('');
   const [locationKeywords, setLocationKeywords] = useState('');
   const [emailOption, setEmailOption] = useState('@gmail.com');
+  const [customEmail, setCustomEmail] = useState('');
   const [outputKeywordSearch, setOutputKeyWordSearch] = useState('');
   const [googleSearchResults, setGoogleSearchResults] = useState([]);
   const [searchMeta, setSearchMeta] = useState([]);
@@ -140,9 +141,14 @@ export const SearchProvider = ({ children }) => {
   // JobSearchComponent.js
   const handleSpecificSearchSubmit = (e) => {
     e.preventDefault();
+
     const formattedJobTitle = `${formatKeywords(jobTitle)}`;
     const formattedLocationKeywords = `${formatKeywords(locationKeywords)}`;
-    const outputText = `${formattedJobTitle} ${formattedLocationKeywords} -intitle:"profiles" -inurl:"dir/ " email "${emailOption}" site:www.linkedin.com/in/ OR site:www.linkedin.com/pub/`;
+
+    const emailDomain = emailOption === 'custom' ? customEmail : emailOption;
+
+    const outputText = `${formattedJobTitle} ${formattedLocationKeywords} -intitle:"profiles" -inurl:"dir/ " email "${emailDomain}" site:www.linkedin.com/in/ OR site:www.linkedin.com/pub/`;
+
     setOutputKeyWordSearch(outputText);
     setSearchQuery(outputText); // Set the generated query as the search query
   };
@@ -167,8 +173,20 @@ export const SearchProvider = ({ children }) => {
   };
 
   const handleEmailOptionChange = (option) => {
-    setEmailOption(option);
+    if (
+      option === '@gmail.com' ||
+      option === '@outlook.com' ||
+      option === '@yahoo.com' ||
+      option === 'custom'
+    ) {
+      setEmailOption(option);
+      setCustomEmail(''); // Clear out the custom email if a preset option is selected
+    } else {
+      setEmailOption('custom');
+      setCustomEmail(option); // Save the custom email domain
+    }
   };
+
   // JobSearchComponent.js
 
   // Checkbox table features

@@ -48,7 +48,7 @@ const SearchForms = () => {
             </MDBCol>
 
             {/* Email options */}
-            <MDBRow>
+            <MDBRow className="gy-2">
               <MDBCol>
                 <label>
                   <input
@@ -59,8 +59,6 @@ const SearchForms = () => {
                   />
                   Gmail
                 </label>
-              </MDBCol>
-              <MDBCol>
                 <label>
                   <input
                     type="radio"
@@ -70,8 +68,6 @@ const SearchForms = () => {
                   />
                   Outlook
                 </label>
-              </MDBCol>
-              <MDBCol>
                 <label>
                   <input
                     type="radio"
@@ -81,6 +77,24 @@ const SearchForms = () => {
                   />
                   Yahoo
                 </label>
+                <label>
+                  <input
+                    type="radio"
+                    value="custom"
+                    checked={emailOption === 'custom'}
+                    onChange={(e) => handleEmailOptionChange(e.target.value)}
+                  />
+                  Custom:
+                </label>
+                {emailOption === 'custom' && (
+                  <MDBInput
+                    type="text"
+                    id="customEmail"
+                    size="lg"
+                    placeholder="@custom.com"
+                    onChange={(e) => handleEmailOptionChange(e.target.value)}
+                  />
+                )}
               </MDBCol>
             </MDBRow>
 
