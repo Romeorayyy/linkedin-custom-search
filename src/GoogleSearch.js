@@ -34,7 +34,7 @@ const GoogleSearch = () => {
                   </li>
                   <li>
                     Once you've selected the desired users, click the{' '}
-                    <span style={{ color: '#50ABC8' }}>"View Table"</span>
+                    <span style={{ color: '#50ABC8' }}>"View Table" </span>
                     button to export only those users
                   </li>
                 </ol>
