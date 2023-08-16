@@ -197,6 +197,7 @@ export const SearchProvider = ({ children }) => {
     emailsData,
     selectedProfiles,
     toggleSelectedProfile,
+    setJobSearchQuery,
     handleLoadMore,
     handleEmailOptionChange,
     handleSetJobTitle,

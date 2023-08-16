@@ -1,6 +1,6 @@
 # Linkendin Custom Search - React Project Overview
 
-This React project provides a custom interface for performing Google searches, displaying results, and offering related functionalities.
+This React project provides a custom interface for performing Google searches, displaying results, and offering related functionalities using the Google Search API.
 
 ## File and Directory Descriptions
 
