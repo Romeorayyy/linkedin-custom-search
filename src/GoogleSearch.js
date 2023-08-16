@@ -1,28 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import ProfileCard from './components/ProfileCard';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdb-react-ui-kit';
 import SearchForms from './components/SearchForms';
 import DataTableModal from './components/DataTableModal';
-import DataTable from './components/DataTable';
 import { useSearch } from './context/SearchContext';
 
 const GoogleSearch = () => {
   const { handleLoadMore, metaData, selectedProfiles } = useSearch();
 
-  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 992);
   const [showTableModal, setShowTableModal] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsLargeScreen(window.innerWidth >= 992);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
 
   const toggleModal = () => {
     setShowTableModal(!showTableModal);
