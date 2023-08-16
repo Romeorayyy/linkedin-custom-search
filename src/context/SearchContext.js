@@ -162,10 +162,14 @@ export const SearchProvider = ({ children }) => {
   };
 
   const formatKeywords = (keywords) => {
+    // Replace commas not surrounded by AND or OR with AND
+    keywords = keywords.replace(/(?<!AND|OR)\s*,\s*(?!AND|OR)/g, ' AND ');
+
     return keywords
       .split(/\b(and|or)\b/i)
       .map((keyword) =>
-        keyword.trim() === 'and' || keyword.trim() === 'or'
+        keyword.trim().toLowerCase() === 'and' ||
+        keyword.trim().toLowerCase() === 'or'
           ? keyword.trim().toUpperCase()
           : `"${keyword.trim()}"`
       )

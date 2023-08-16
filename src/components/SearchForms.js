@@ -31,19 +31,19 @@ const SearchForms = () => {
                 onChange={handleSetJobTitle}
                 size="lg"
                 required
-                placeholder="Enter job title"
+                placeholder="Enter job title (e.g. Manager or Director, Recruiter and Web Developer, UX Designer, Graphic Designer)"
               />
             </MDBCol>
             <MDBCol size="12" className="gy-3">
               <MDBInput
                 type="text"
                 id="locationKeywords"
-                label="Location or Keywords to Include"
+                label="Location or Keywords"
                 value={locationKeywords}
                 onChange={handleSetLocationKeyword}
                 size="lg"
                 required
-                placeholder="Enter location or keywords"
+                placeholder="Enter location or keywords (e.g. Michigan or Texas, Data and Analyst, New York, Engineer)"
               />
             </MDBCol>
             {/* Email options */}
@@ -127,6 +127,7 @@ const SearchForms = () => {
                 onChange={handleSearchQuery}
                 size="lg"
                 required
+                readOnly
               />
             </MDBCol>
             <MDBCol className="align-self-center" size={2}>
