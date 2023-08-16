@@ -9,6 +9,7 @@ import {
   MDBModalFooter,
 } from 'mdb-react-ui-kit';
 import DataTable from './DataTable';
+import ExportData from './ExportData';
 
 const DataTableModal = ({ showTableModal, toggleModal }) => {
   return (
@@ -23,6 +24,7 @@ const DataTableModal = ({ showTableModal, toggleModal }) => {
             <DataTable />
           </MDBModalBody>
           <MDBModalFooter>
+            <ExportData />
             <MDBBtn color="secondary" onClick={toggleModal}>
               Close
             </MDBBtn>
